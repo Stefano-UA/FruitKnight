@@ -39,7 +39,7 @@ def _dib_entry(surface: pygame.Surface) -> bytes:
     """
     w, h = surface.get_size()
     header = struct.pack("<IiiHHIIiiII", 40, w, h * 2, 1, 32, 0, 0, 0, 0, 0, 0)
-    raw = pygame.image.tostring(surface, "BGRA")
+    raw = pygame.image.tobytes(surface, "BGRA")
     rows = [raw[y * w * 4:(y + 1) * w * 4] for y in range(h)]
     pixels = b"".join(reversed(rows))  # bitmaps are stored bottom-up
     mask = bytes(((w + 31) // 32 * 4) * h)
@@ -51,7 +51,7 @@ def ensure_icon(path: Path) -> Path:
 
     :param path: destination file.
     :type path: pathlib.Path
-    :return: the same path.
+    :return: input path, guaranteed to exist.
     :rtype: pathlib.Path
     """
     if path.exists() and path.stat().st_size > 0:

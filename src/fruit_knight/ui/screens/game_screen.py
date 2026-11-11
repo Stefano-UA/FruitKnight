@@ -139,19 +139,23 @@ class GameScreen(Screen):
             self.effects.update(dt)
         elif self.phase == Phase.PLAYING:
             self.mode.update(dt, self.samples)
-            for event in self.mode.drain_events():
-                self.effects.handle(event)
+            self._dispatch_events()
             self.effects.update(dt)
             if self.mode.finished:
                 self.phase = Phase.ENDING
         elif self.phase == Phase.ENDING:
             self.mode.update(dt, {})
-            for event in self.mode.drain_events():
-                self.effects.handle(event)
+            self._dispatch_events()
             self.effects.update(dt)
             self.end_timer.update(dt)
             if self.end_timer.done:
                 self.app.goto("game_over", mode=self.mode)
+
+    def _dispatch_events(self) -> None:
+        """Forward mode events to visual effects and sound."""
+        for event in self.mode.drain_events():
+            self.effects.handle(event)
+            self.app.audio.play(event.kind)
 
     # ------------------------------------------------------------------- draw
     def draw(self, surface: pygame.Surface) -> None:

@@ -116,3 +116,32 @@ def test_mediapipe_trackers_run_on_blank_frame(mode: TrackingMode) -> None:
         hands, poses = tracker.process(blank, ts)
         assert hands == [] and poses == []
     tracker.close()
+
+
+@pytest.mark.skipif(bool(missing_models(CFG.tracking)), reason="MediaPipe models not downloaded")
+def test_pipeline_mirrors_crops_and_tracks_synthetic_frames() -> None:
+    """Injected frames flow through mirror, ROI crop and the tracker thread."""
+    import time
+
+    from fruit_knight.vision.camera import STATUS_READY
+    from fruit_knight.vision.pipeline import VisionPipeline
+
+    pipeline = VisionPipeline(CFG.tracking)
+    frame = np.zeros((120, 200, 3), dtype=np.uint8)
+    frame[:, :100] = (255, 0, 0)  # left half blue in BGR; becomes the right half after mirroring
+    pipeline.camera.status = STATUS_READY
+    pipeline.set_roi(RoiRect(0.5, 0.0, 0.5, 1.0))
+    pipeline.start_tracking(TrackingMode.HANDS_ONLY, 1)
+    try:
+        result = None
+        for i in range(400):
+            pipeline.camera._frame, pipeline.camera._counter = frame.copy(), i + 1
+            result = pipeline.latest()
+            if result is not None and pipeline.tracker_status == "ready":
+                break
+            time.sleep(0.02)
+        assert result is not None and pipeline.tracker_status == "ready"
+        assert result.frame.shape == (120, 100, 3)
+        assert result.frame[0, 0].tolist() == [0, 0, 255]  # mirrored, cropped and converted to RGB
+    finally:
+        pipeline.shutdown()

@@ -9,6 +9,7 @@ import pygame
 from fruit_knight.config.schema import GameConfig
 from fruit_knight.modes.setup import MatchSetup
 from fruit_knight.rendering.assets import AssetManager
+from fruit_knight.rendering.audio import AudioManager
 from fruit_knight.rendering.fonts import FontCache
 from fruit_knight.rendering.icon import build_icon_surface, ensure_icon
 from fruit_knight.rendering.sprites import SpriteProvider
@@ -49,6 +50,7 @@ class App:
         self.assets = AssetManager()
         self.sprites = SpriteProvider(cfg, self.assets)
         self.fonts = FontCache()
+        self.audio = AudioManager(cfg.audio)
         self.pipeline = VisionPipeline(cfg.tracking)
         self.setup = MatchSetup.from_config(cfg)
         self.running = True

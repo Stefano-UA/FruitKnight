@@ -237,6 +237,22 @@ ui:
   logo_sprite_path: assets/sprites/ui/logo.png
 
 # ----------------------------------------------------------------------------
+# Optional sound effects (keys are game event kinds). Missing files are skipped silently.
+# ----------------------------------------------------------------------------
+audio:
+  enabled: true
+  volume: 0.7
+  sounds:
+    slice: assets/audio/slice.wav
+    explosion: assets/audio/explosion.wav
+    grab: assets/audio/grab.wav
+    release: assets/audio/throw.wav
+    defuse: assets/audio/defuse.wav
+    thrower_success: assets/audio/success.wav
+    goal: assets/audio/goal.wav
+    eliminated: assets/audio/eliminated.wav
+
+# ----------------------------------------------------------------------------
 # Default values of the match setup screen
 # ----------------------------------------------------------------------------
 defaults:

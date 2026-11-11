@@ -241,6 +241,15 @@ class UiConfig:
 
 
 @dataclass
+class AudioConfig:
+    """Optional sound effects; missing files are silently skipped."""
+
+    enabled: bool = True
+    volume: float = 0.7
+    sounds: dict[str, str] = field(default_factory=dict)
+
+
+@dataclass
 class DefaultsConfig:
     """Initial values of the match setup screen."""
 
@@ -279,4 +288,5 @@ class GameConfig:
     tracking: TrackingConfig = field(default_factory=TrackingConfig)
     players: PlayersConfig = field(default_factory=PlayersConfig)
     ui: UiConfig = field(default_factory=UiConfig)
+    audio: AudioConfig = field(default_factory=AudioConfig)
     defaults: DefaultsConfig = field(default_factory=DefaultsConfig)
