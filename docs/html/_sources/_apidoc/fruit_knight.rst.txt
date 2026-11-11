@@ -1,0 +1,30 @@
+fruit\_knight package
+=====================
+
+.. automodule:: fruit_knight
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.config
+   fruit_knight.entities
+   fruit_knight.modes
+   fruit_knight.physics
+   fruit_knight.rendering
+   fruit_knight.ui
+   fruit_knight.utils
+   fruit_knight.vision
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.main

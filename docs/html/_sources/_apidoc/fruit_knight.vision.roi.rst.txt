@@ -1,0 +1,7 @@
+fruit\_knight.vision.roi module
+===============================
+
+.. automodule:: fruit_knight.vision.roi
+   :members:
+   :show-inheritance:
+   :undoc-members:

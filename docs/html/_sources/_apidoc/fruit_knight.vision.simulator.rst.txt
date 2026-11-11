@@ -1,0 +1,7 @@
+fruit\_knight.vision.simulator module
+=====================================
+
+.. automodule:: fruit_knight.vision.simulator
+   :members:
+   :show-inheritance:
+   :undoc-members:

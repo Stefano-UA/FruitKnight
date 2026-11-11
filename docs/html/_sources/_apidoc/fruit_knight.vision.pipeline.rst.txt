@@ -1,0 +1,7 @@
+fruit\_knight.vision.pipeline module
+====================================
+
+.. automodule:: fruit_knight.vision.pipeline
+   :members:
+   :show-inheritance:
+   :undoc-members:

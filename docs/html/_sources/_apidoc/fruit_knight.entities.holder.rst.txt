@@ -1,0 +1,7 @@
+fruit\_knight.entities.holder module
+====================================
+
+.. automodule:: fruit_knight.entities.holder
+   :members:
+   :show-inheritance:
+   :undoc-members:

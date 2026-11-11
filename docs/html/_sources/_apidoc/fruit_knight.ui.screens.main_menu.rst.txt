@@ -1,0 +1,7 @@
+fruit\_knight.ui.screens.main\_menu module
+==========================================
+
+.. automodule:: fruit_knight.ui.screens.main_menu
+   :members:
+   :show-inheritance:
+   :undoc-members:

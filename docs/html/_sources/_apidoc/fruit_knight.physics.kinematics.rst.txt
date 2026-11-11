@@ -1,0 +1,7 @@
+fruit\_knight.physics.kinematics module
+=======================================
+
+.. automodule:: fruit_knight.physics.kinematics
+   :members:
+   :show-inheritance:
+   :undoc-members:

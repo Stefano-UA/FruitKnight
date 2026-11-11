@@ -1,0 +1,7 @@
+fruit\_knight.modes.base module
+===============================
+
+.. automodule:: fruit_knight.modes.base
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+fruit_knight
+============
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight

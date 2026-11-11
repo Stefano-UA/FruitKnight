@@ -1,0 +1,7 @@
+fruit\_knight.ui.overlays module
+================================
+
+.. automodule:: fruit_knight.ui.overlays
+   :members:
+   :show-inheritance:
+   :undoc-members:

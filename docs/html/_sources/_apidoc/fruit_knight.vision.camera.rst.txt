@@ -1,0 +1,7 @@
+fruit\_knight.vision.camera module
+==================================
+
+.. automodule:: fruit_knight.vision.camera
+   :members:
+   :show-inheritance:
+   :undoc-members:

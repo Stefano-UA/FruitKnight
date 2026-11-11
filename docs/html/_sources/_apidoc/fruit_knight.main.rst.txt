@@ -1,0 +1,7 @@
+fruit\_knight.main module
+=========================
+
+.. automodule:: fruit_knight.main
+   :members:
+   :show-inheritance:
+   :undoc-members:

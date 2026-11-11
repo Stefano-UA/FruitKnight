@@ -1,0 +1,7 @@
+fruit\_knight.vision.trackers module
+====================================
+
+.. automodule:: fruit_knight.vision.trackers
+   :members:
+   :show-inheritance:
+   :undoc-members:

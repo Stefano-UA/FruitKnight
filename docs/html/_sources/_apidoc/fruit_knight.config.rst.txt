@@ -1,0 +1,16 @@
+fruit\_knight.config package
+============================
+
+.. automodule:: fruit_knight.config
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.config.loader
+   fruit_knight.config.schema

@@ -1,0 +1,4 @@
+/* Dark arcade accents on top of Furo. */
+body { --color-sidebar-brand-text: #ffab40; }
+.sidebar-brand-text { font-weight: 800; letter-spacing: 0.04em; }
+table.docutils th { background: #1e2124; }

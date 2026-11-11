@@ -1,0 +1,7 @@
+fruit\_knight.vision.models module
+==================================
+
+.. automodule:: fruit_knight.vision.models
+   :members:
+   :show-inheritance:
+   :undoc-members:

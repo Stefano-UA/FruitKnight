@@ -1,0 +1,784 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
+
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>fruit_knight.vision.trackers - Fruit Knight</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=fe3f360e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style>
+
+
+<script>
+  try { localStorage.setItem("theme", "dark"); } catch (e) {}
+  document.documentElement.dataset.theme = "dark";
+</script>
+</head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">Fruit Knight</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  <span class="sidebar-brand-text">Fruit Knight</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../_apidoc/modules.html">fruit_knight</a><input aria-label="Toggle navigation of fruit_knight" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.html">fruit_knight package</a><input aria-label="Toggle navigation of fruit_knight package" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.config.html">fruit_knight.config package</a><input aria-label="Toggle navigation of fruit_knight.config package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.config.loader.html">fruit_knight.config.loader module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.config.schema.html">fruit_knight.config.schema module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.html">fruit_knight.entities package</a><input aria-label="Toggle navigation of fruit_knight.entities package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.base.html">fruit_knight.entities.base module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.bomb.html">fruit_knight.entities.bomb module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.factory.html">fruit_knight.entities.factory module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.fruit.html">fruit_knight.entities.fruit module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.holder.html">fruit_knight.entities.holder module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.limiter.html">fruit_knight.entities.limiter module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.target_zone.html">fruit_knight.entities.target_zone module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.entities.thrower.html">fruit_knight.entities.thrower module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.html">fruit_knight.modes package</a><input aria-label="Toggle navigation of fruit_knight.modes package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.base.html">fruit_knight.modes.base module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.competition.html">fruit_knight.modes.competition module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.endurance.html">fruit_knight.modes.endurance module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.events.html">fruit_knight.modes.events module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.football.html">fruit_knight.modes.football module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.interaction.html">fruit_knight.modes.interaction module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.players.html">fruit_knight.modes.players module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.setup.html">fruit_knight.modes.setup module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.modes.spawner.html">fruit_knight.modes.spawner module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.physics.html">fruit_knight.physics package</a><input aria-label="Toggle navigation of fruit_knight.physics package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.physics.coords.html">fruit_knight.physics.coords module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.physics.kinematics.html">fruit_knight.physics.kinematics module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.physics.world.html">fruit_knight.physics.world module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.html">fruit_knight.rendering package</a><input aria-label="Toggle navigation of fruit_knight.rendering package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.assets.html">fruit_knight.rendering.assets module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.audio.html">fruit_knight.rendering.audio module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.camera_view.html">fruit_knight.rendering.camera_view module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.draw_utils.html">fruit_knight.rendering.draw_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.effects.html">fruit_knight.rendering.effects module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.entity_renderer.html">fruit_knight.rendering.entity_renderer module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.fonts.html">fruit_knight.rendering.fonts module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.icon.html">fruit_knight.rendering.icon module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.overlay.html">fruit_knight.rendering.overlay module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.procedural.html">fruit_knight.rendering.procedural module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.rendering.sprites.html">fruit_knight.rendering.sprites module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.html">fruit_knight.ui package</a><input aria-label="Toggle navigation of fruit_knight.ui package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.html">fruit_knight.ui.screens package</a><input aria-label="Toggle navigation of fruit_knight.ui.screens package" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.base.html">fruit_knight.ui.screens.base module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.camera_roi.html">fruit_knight.ui.screens.camera_roi module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.game_over.html">fruit_knight.ui.screens.game_over module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.game_screen.html">fruit_knight.ui.screens.game_screen module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.main_menu.html">fruit_knight.ui.screens.main_menu module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.screens.mode_setup.html">fruit_knight.ui.screens.mode_setup module</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.app.html">fruit_knight.ui.app module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.hud.html">fruit_knight.ui.hud module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.overlays.html">fruit_knight.ui.overlays module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.ui.theme.html">fruit_knight.ui.theme module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.utils.html">fruit_knight.utils package</a><input aria-label="Toggle navigation of fruit_knight.utils package" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.utils.constants.html">fruit_knight.utils.constants module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.utils.math_utils.html">fruit_knight.utils.math_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.utils.paths.html">fruit_knight.utils.paths module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.utils.timers.html">fruit_knight.utils.timers module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.html">fruit_knight.vision package</a><input aria-label="Toggle navigation of fruit_knight.vision package" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.camera.html">fruit_knight.vision.camera module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.gestures.html">fruit_knight.vision.gestures module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.hands.html">fruit_knight.vision.hands module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.models.html">fruit_knight.vision.models module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.motion.html">fruit_knight.vision.motion module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.pipeline.html">fruit_knight.vision.pipeline module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.roi.html">fruit_knight.vision.roi module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.simulator.html">fruit_knight.vision.simulator module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../_apidoc/fruit_knight.vision.trackers.html">fruit_knight.vision.trackers module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_apidoc/fruit_knight.main.html">fruit_knight.main module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for fruit_knight.vision.trackers</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""MediaPipe Tasks trackers: Pose+Hands and lightweight Hands-only."""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fruit_knight.config.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrackingConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fruit_knight.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LEFT_SHOULDER</span><span class="p">,</span>
+    <span class="n">LEFT_WRIST</span><span class="p">,</span>
+    <span class="n">RIGHT_SHOULDER</span><span class="p">,</span>
+    <span class="n">RIGHT_WRIST</span><span class="p">,</span>
+    <span class="n">WRIST</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Maximum normalised movement of a pose centroid between frames to keep its identity.</span>
+<span class="n">IDENTITY_MATCH_DISTANCE</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">MAX_HANDS_PER_PLAYER</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<div class="viewcode-block" id="HandObservation">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.HandObservation">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HandObservation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""One detected hand assigned to a player."""</span>
+
+    <span class="n">player_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">landmarks</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># shape (21, 2), normalised to the processed frame</span></div>
+
+
+
+<div class="viewcode-block" id="PoseObservation">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PoseObservation">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PoseObservation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""One detected body pose assigned to a player."""</span>
+
+    <span class="n">player_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">landmarks</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># shape (33, 2), normalised to the processed frame</span></div>
+
+
+
+<div class="viewcode-block" id="TrackingResult">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.TrackingResult">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TrackingResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Output of one processed camera frame."""</span>
+
+    <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># RGB, mirrored and ROI-cropped</span>
+    <span class="n">hands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">HandObservation</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">poses</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PoseObservation</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+
+
+<div class="viewcode-block" id="assign_hands_to_zones">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.assign_hands_to_zones">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assign_hands_to_zones</span><span class="p">(</span><span class="n">wrist_xs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Assign hands to equal-width horizontal zones.</span>
+
+<span class="sd">    :param wrist_xs: normalised wrist x coordinates in ``[0, 1]``.</span>
+<span class="sd">    :type wrist_xs: list[float]</span>
+<span class="sd">    :param players: number of players (zones).</span>
+<span class="sd">    :type players: int</span>
+<span class="sd">    :return: player id (1-based) per hand.</span>
+<span class="sd">    :rtype: list[int]</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">players</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">players</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">wrist_xs</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="assign_hands_to_poses">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.assign_hands_to_poses">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assign_hands_to_poses</span><span class="p">(</span>
+    <span class="n">hand_wrists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+    <span class="n">pose_wrists</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+    <span class="n">max_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Assign each hand to the player whose pose wrist is closest.</span>
+
+<span class="sd">    :param hand_wrists: normalised wrist position of each hand.</span>
+<span class="sd">    :type hand_wrists: list[tuple[float, float]]</span>
+<span class="sd">    :param pose_wrists: pose wrist positions per player id.</span>
+<span class="sd">    :type pose_wrists: dict[int, list[tuple[float, float]]]</span>
+<span class="sd">    :param max_distance: largest accepted normalised distance.</span>
+<span class="sd">    :type max_distance: float</span>
+<span class="sd">    :return: player id per hand, ``None`` when no pose is close enough.</span>
+<span class="sd">    :rtype: list[int | None]</span>
+<span class="sd">    """</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">hi</span><span class="p">,</span> <span class="n">hw</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hand_wrists</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">wrists</span> <span class="ow">in</span> <span class="n">pose_wrists</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wrists</span><span class="p">)</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">best</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">pid</span><span class="p">))</span>
+    <span class="n">candidates</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">hand_wrists</span><span class="p">)</span>
+    <span class="n">counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">dist</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="n">max_distance</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">hi</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MAX_HANDS_PER_PLAYER</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">hi</span><span class="p">]</span> <span class="o">=</span> <span class="n">pid</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="PlayerIdentityTracker">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PlayerIdentityTracker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlayerIdentityTracker</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Keep consistent player ids for detected poses across frames."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create tracker.</span>
+
+<span class="sd">        :param players: number of players expected.</span>
+<span class="sd">        :type players: int</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_players</span> <span class="o">=</span> <span class="n">players</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="PlayerIdentityTracker.assign">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PlayerIdentityTracker.assign">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">centroids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Match pose centroids to persistent player ids.</span>
+
+<span class="sd">        :param centroids: normalised torso centroid per detected pose.</span>
+<span class="sd">        :type centroids: list[tuple[float, float]]</span>
+<span class="sd">        :return: player id per pose, ``None`` for surplus poses.</span>
+<span class="sd">        :rtype: list[int | None]</span>
+<span class="sd">        """</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+        <span class="n">used</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">lx</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ly</span><span class="p">),</span> <span class="n">i</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="p">(</span><span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">dist</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;=</span> <span class="n">IDENTITY_MATCH_DISTANCE</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">used</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pid</span>
+                <span class="n">used</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+        <span class="n">free</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_players</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">used</span><span class="p">]</span>
+        <span class="c1"># New bodies take the lowest free id, left-most body first.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">centroids</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">free</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">free</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">pid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">centroids</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_last</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="fix_hand_labels">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.fix_hand_labels">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fix_hand_labels</span><span class="p">(</span><span class="n">hands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">HandObservation</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Make hand labels unique within each player.</span>
+
+<span class="sd">    :param hands: observations whose labels may collide.</span>
+<span class="sd">    :type hands: list[HandObservation]</span>
+<span class="sd">    """</span>
+    <span class="n">by_player</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">HandObservation</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">hand</span> <span class="ow">in</span> <span class="n">hands</span><span class="p">:</span>
+        <span class="n">by_player</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">hand</span><span class="o">.</span><span class="n">player_id</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">by_player</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+            <span class="n">left_first</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">landmarks</span><span class="p">[</span><span class="n">WRIST</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">left_first</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">left_first</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">"Left"</span><span class="p">,</span> <span class="s2">"Right"</span></div>
+
+
+
+<div class="viewcode-block" id="BaseTracker">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.BaseTracker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseTracker</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Interface of frame-by-frame trackers."""</span>
+
+<div class="viewcode-block" id="BaseTracker.process">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.BaseTracker.process">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rgb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">timestamp_ms</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">HandObservation</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">PoseObservation</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Detect hands (and poses) in an RGB frame.</span>
+
+<span class="sd">        :param rgb: contiguous ``uint8`` image of shape ``(H, W, 3)``.</span>
+<span class="sd">        :type rgb: numpy.ndarray</span>
+<span class="sd">        :param timestamp_ms: strictly increasing timestamp in milliseconds.</span>
+<span class="sd">        :type timestamp_ms: int</span>
+<span class="sd">        :return: hand and pose observations with player ids assigned.</span>
+<span class="sd">        :rtype: tuple[list[HandObservation], list[PoseObservation]]</span>
+<span class="sd">        """</span></div>
+
+
+<div class="viewcode-block" id="BaseTracker.close">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.BaseTracker.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Release native resources."""</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_hand_landmarker</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrackingConfig</span><span class="p">,</span> <span class="n">max_hands</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Build MediaPipe HandLandmarker in VIDEO mode.</span>
+
+<span class="sd">    :param model: path of ``hand_landmarker.task``.</span>
+<span class="sd">    :type model: pathlib.Path</span>
+<span class="sd">    :param cfg: tracking configuration.</span>
+<span class="sd">    :type cfg: fruit_knight.config.schema.TrackingConfig</span>
+<span class="sd">    :param max_hands: maximum number of simultaneous hands.</span>
+<span class="sd">    :type max_hands: int</span>
+<span class="sd">    :return: configured landmarker.</span>
+<span class="sd">    :rtype: mediapipe.tasks.python.vision.HandLandmarker</span>
+<span class="sd">    """</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mediapipe.tasks.python</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseOptions</span><span class="p">,</span> <span class="n">vision</span>
+
+    <span class="c1"># Model bytes avoid native path issues with non-ASCII Windows folders.</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">HandLandmarkerOptions</span><span class="p">(</span>
+        <span class="n">base_options</span><span class="o">=</span><span class="n">BaseOptions</span><span class="p">(</span><span class="n">model_asset_buffer</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()),</span>
+        <span class="n">running_mode</span><span class="o">=</span><span class="n">vision</span><span class="o">.</span><span class="n">RunningMode</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+        <span class="n">num_hands</span><span class="o">=</span><span class="n">max_hands</span><span class="p">,</span>
+        <span class="n">min_hand_detection_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_detection_confidence</span><span class="p">,</span>
+        <span class="n">min_hand_presence_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_detection_confidence</span><span class="p">,</span>
+        <span class="n">min_tracking_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_tracking_confidence</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">vision</span><span class="o">.</span><span class="n">HandLandmarker</span><span class="o">.</span><span class="n">create_from_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_mp_image</span><span class="p">(</span><span class="n">rgb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Wrap an RGB array into a MediaPipe image.</span>
+
+<span class="sd">    :param rgb: contiguous ``uint8`` RGB array.</span>
+<span class="sd">    :type rgb: numpy.ndarray</span>
+<span class="sd">    :return: MediaPipe image.</span>
+<span class="sd">    :rtype: mediapipe.Image</span>
+<span class="sd">    """</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">mediapipe</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+
+    <span class="k">return</span> <span class="n">mp</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">image_format</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">ImageFormat</span><span class="o">.</span><span class="n">SRGB</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">rgb</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_hand_arrays</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Convert a HandLandmarker result into label and landmark arrays.</span>
+
+<span class="sd">    :param result: MediaPipe hand landmarker result.</span>
+<span class="sd">    :type result: mediapipe.tasks.python.vision.HandLandmarkerResult</span>
+<span class="sd">    :return: list of ``(label, (21, 2) array)``.</span>
+<span class="sd">    :rtype: list[tuple[str, numpy.ndarray]]</span>
+<span class="sd">    """</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">landmarks</span><span class="p">,</span> <span class="n">handedness</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">hand_landmarks</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">handedness</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lm</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">lm</span> <span class="ow">in</span> <span class="n">landmarks</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">handedness</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">category_name</span> <span class="k">if</span> <span class="n">handedness</span> <span class="k">else</span> <span class="s2">"Right"</span><span class="p">,</span> <span class="n">arr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="HandsOnlyTracker">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.HandsOnlyTracker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HandsOnlyTracker</span><span class="p">(</span><span class="n">BaseTracker</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Low-CPU tracker: HandLandmarker only, players split by screen zones."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrackingConfig</span><span class="p">,</span> <span class="n">players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hand_model</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create tracker.</span>
+
+<span class="sd">        :param cfg: tracking configuration.</span>
+<span class="sd">        :type cfg: fruit_knight.config.schema.TrackingConfig</span>
+<span class="sd">        :param players: number of players (equal horizontal zones).</span>
+<span class="sd">        :type players: int</span>
+<span class="sd">        :param hand_model: path of the hand model file.</span>
+<span class="sd">        :type hand_model: pathlib.Path</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_players</span> <span class="o">=</span> <span class="n">players</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hands</span> <span class="o">=</span> <span class="n">_create_hand_landmarker</span><span class="p">(</span><span class="n">hand_model</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">MAX_HANDS_PER_PLAYER</span> <span class="o">*</span> <span class="n">players</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HandsOnlyTracker.process">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.HandsOnlyTracker.process">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">timestamp_ms</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Detect hands and assign them to zones.</span>
+
+<span class="sd">        :param rgb: contiguous ``uint8`` image of shape ``(H, W, 3)``.</span>
+<span class="sd">        :type rgb: numpy.ndarray</span>
+<span class="sd">        :param timestamp_ms: strictly increasing timestamp in milliseconds.</span>
+<span class="sd">        :type timestamp_ms: int</span>
+<span class="sd">        :return: hand observations and an empty pose list.</span>
+<span class="sd">        :rtype: tuple[list[HandObservation], list[PoseObservation]]</span>
+<span class="sd">        """</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="n">_hand_arrays</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hands</span><span class="o">.</span><span class="n">detect_for_video</span><span class="p">(</span><span class="n">_mp_image</span><span class="p">(</span><span class="n">rgb</span><span class="p">),</span> <span class="n">timestamp_ms</span><span class="p">))</span>
+        <span class="n">zones</span> <span class="o">=</span> <span class="n">assign_hands_to_zones</span><span class="p">([</span><span class="n">arr</span><span class="p">[</span><span class="n">WRIST</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_players</span><span class="p">)</span>
+        <span class="n">hands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">HandObservation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">per_player</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">arr</span><span class="p">),</span> <span class="n">pid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">zones</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">per_player</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MAX_HANDS_PER_PLAYER</span><span class="p">:</span>
+                <span class="n">per_player</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_player</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">hands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HandObservation</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">arr</span><span class="p">))</span>
+        <span class="n">fix_hand_labels</span><span class="p">(</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hands</span><span class="p">,</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="HandsOnlyTracker.close">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.HandsOnlyTracker.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Release the landmarker."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hands</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PoseHandsTracker">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PoseHandsTracker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PoseHandsTracker</span><span class="p">(</span><span class="n">BaseTracker</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Full tracker: PoseLandmarker for mannequins plus HandLandmarker for gestures."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrackingConfig</span><span class="p">,</span> <span class="n">players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pose_model</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">hand_model</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create tracker.</span>
+
+<span class="sd">        :param cfg: tracking configuration.</span>
+<span class="sd">        :type cfg: fruit_knight.config.schema.TrackingConfig</span>
+<span class="sd">        :param players: number of players.</span>
+<span class="sd">        :type players: int</span>
+<span class="sd">        :param pose_model: path of the pose model file.</span>
+<span class="sd">        :type pose_model: pathlib.Path</span>
+<span class="sd">        :param hand_model: path of the hand model file.</span>
+<span class="sd">        :type hand_model: pathlib.Path</span>
+<span class="sd">        """</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mediapipe.tasks.python</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseOptions</span><span class="p">,</span> <span class="n">vision</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_players</span> <span class="o">=</span> <span class="n">players</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_identity</span> <span class="o">=</span> <span class="n">PlayerIdentityTracker</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hands</span> <span class="o">=</span> <span class="n">_create_hand_landmarker</span><span class="p">(</span><span class="n">hand_model</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">MAX_HANDS_PER_PLAYER</span> <span class="o">*</span> <span class="n">players</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">PoseLandmarkerOptions</span><span class="p">(</span>
+            <span class="n">base_options</span><span class="o">=</span><span class="n">BaseOptions</span><span class="p">(</span><span class="n">model_asset_buffer</span><span class="o">=</span><span class="n">pose_model</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()),</span>
+            <span class="n">running_mode</span><span class="o">=</span><span class="n">vision</span><span class="o">.</span><span class="n">RunningMode</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+            <span class="n">num_poses</span><span class="o">=</span><span class="n">players</span><span class="p">,</span>
+            <span class="n">min_pose_detection_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_detection_confidence</span><span class="p">,</span>
+            <span class="n">min_pose_presence_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_detection_confidence</span><span class="p">,</span>
+            <span class="n">min_tracking_confidence</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">min_tracking_confidence</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pose</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">PoseLandmarker</span><span class="o">.</span><span class="n">create_from_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PoseHandsTracker.process">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PoseHandsTracker.process">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">timestamp_ms</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Detect poses and hands, linking each hand to the nearest pose wrist.</span>
+
+<span class="sd">        :param rgb: contiguous ``uint8`` image of shape ``(H, W, 3)``.</span>
+<span class="sd">        :type rgb: numpy.ndarray</span>
+<span class="sd">        :param timestamp_ms: strictly increasing timestamp in milliseconds.</span>
+<span class="sd">        :type timestamp_ms: int</span>
+<span class="sd">        :return: hand and pose observations with player ids.</span>
+<span class="sd">        :rtype: tuple[list[HandObservation], list[PoseObservation]]</span>
+<span class="sd">        """</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">_mp_image</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span>
+        <span class="n">pose_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pose</span><span class="o">.</span><span class="n">detect_for_video</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">timestamp_ms</span><span class="p">)</span>
+        <span class="n">raw_hands</span> <span class="o">=</span> <span class="n">_hand_arrays</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hands</span><span class="o">.</span><span class="n">detect_for_video</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">timestamp_ms</span><span class="p">))</span>
+
+        <span class="n">pose_arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lm</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">lm</span> <span class="ow">in</span> <span class="n">pose</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">pose</span> <span class="ow">in</span> <span class="n">pose_result</span><span class="o">.</span><span class="n">pose_landmarks</span><span class="p">]</span>
+        <span class="n">centroids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(((</span><span class="n">p</span><span class="p">[</span><span class="n">LEFT_SHOULDER</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="n">RIGHT_SHOULDER</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pose_arrays</span><span class="p">]</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identity</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+        <span class="n">poses</span> <span class="o">=</span> <span class="p">[</span><span class="n">PoseObservation</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">arr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">pose_arrays</span><span class="p">)</span> <span class="k">if</span> <span class="n">pid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="n">hand_wrists</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">WRIST</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">WRIST</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">raw_hands</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">poses</span><span class="p">:</span>
+            <span class="n">pose_wrists</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">player_id</span><span class="p">:</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">landmarks</span><span class="p">[</span><span class="n">LEFT_WRIST</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">landmarks</span><span class="p">[</span><span class="n">RIGHT_WRIST</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())]</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">poses</span>
+            <span class="p">}</span>
+            <span class="n">owners</span> <span class="o">=</span> <span class="n">assign_hands_to_poses</span><span class="p">(</span><span class="n">hand_wrists</span><span class="p">,</span> <span class="n">pose_wrists</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="o">.</span><span class="n">assign_max_distance</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No body visible: fall back to screen zones so hands stay playable.</span>
+            <span class="n">owners</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">assign_hands_to_zones</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">hand_wrists</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_players</span><span class="p">))</span>
+        <span class="n">hands</span> <span class="o">=</span> <span class="p">[</span><span class="n">HandObservation</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">arr</span><span class="p">),</span> <span class="n">pid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_hands</span><span class="p">,</span> <span class="n">owners</span><span class="p">)</span> <span class="k">if</span> <span class="n">pid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">fix_hand_labels</span><span class="p">(</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hands</span><span class="p">,</span> <span class="n">poses</span></div>
+
+
+<div class="viewcode-block" id="PoseHandsTracker.close">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.trackers.html#fruit_knight.vision.trackers.PoseHandsTracker.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Release both landmarkers."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hands</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pose</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Fruit Knight team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

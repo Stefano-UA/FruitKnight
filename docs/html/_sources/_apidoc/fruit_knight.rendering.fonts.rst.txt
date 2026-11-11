@@ -1,0 +1,7 @@
+fruit\_knight.rendering.fonts module
+====================================
+
+.. automodule:: fruit_knight.rendering.fonts
+   :members:
+   :show-inheritance:
+   :undoc-members:

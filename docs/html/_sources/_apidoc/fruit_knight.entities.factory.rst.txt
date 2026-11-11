@@ -1,0 +1,7 @@
+fruit\_knight.entities.factory module
+=====================================
+
+.. automodule:: fruit_knight.entities.factory
+   :members:
+   :show-inheritance:
+   :undoc-members:

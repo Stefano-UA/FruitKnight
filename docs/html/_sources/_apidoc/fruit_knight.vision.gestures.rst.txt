@@ -1,0 +1,7 @@
+fruit\_knight.vision.gestures module
+====================================
+
+.. automodule:: fruit_knight.vision.gestures
+   :members:
+   :show-inheritance:
+   :undoc-members:

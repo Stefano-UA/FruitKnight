@@ -1,0 +1,23 @@
+fruit\_knight.vision package
+============================
+
+.. automodule:: fruit_knight.vision
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.vision.camera
+   fruit_knight.vision.gestures
+   fruit_knight.vision.hands
+   fruit_knight.vision.models
+   fruit_knight.vision.motion
+   fruit_knight.vision.pipeline
+   fruit_knight.vision.roi
+   fruit_knight.vision.simulator
+   fruit_knight.vision.trackers

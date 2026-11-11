@@ -1,0 +1,7 @@
+fruit\_knight.config.loader module
+==================================
+
+.. automodule:: fruit_knight.config.loader
+   :members:
+   :show-inheritance:
+   :undoc-members:
