@@ -1,0 +1,256 @@
+# ============================================================================
+# Fruit Knight - master configuration
+# Every technical and gameplay parameter lives here (no magic numbers in code).
+# Units: pixels, seconds, degrees unless stated otherwise.
+# ============================================================================
+
+window:
+  width: 1280
+  height: 720
+  fps: 60                      # target frames per second
+  title: "Fruit Knight - Rehabilitation Serious Game"
+  fullscreen: false
+
+countdown_seconds: 5.0         # pre-match and post-pause countdown
+
+# ----------------------------------------------------------------------------
+# Physics (Pymunk). Screen coordinates: +y points down.
+# ----------------------------------------------------------------------------
+physics:
+  gravity: 620.0               # base gravity g0 in px/s^2 (g_eff = g0 * weight)
+  substeps: 2                  # physics sub-steps per rendered frame
+  damping: 1.0                 # Pymunk velocity damping (1.0 = no air drag)
+  spawn_offset: 40.0           # px below the bottom edge where entities spawn
+  exit_margin: 90.0            # px beyond the screen edge before an entity counts as exited
+  max_spin: 4.0                # max random angular velocity at spawn (rad/s)
+  max_entity_speed: 3200.0     # clamp for thrown entity speed (px/s)
+
+# ----------------------------------------------------------------------------
+# Dynamic difficulty: fruit stream spawn interval over match time t:
+#   interval(t) = max(min_spawn_interval, base_spawn_interval * exp(-rate * t)) * U(jitter)
+# Hazard intervals are divided by exp(rate * t / 2) so they also tighten slowly.
+# ----------------------------------------------------------------------------
+spawning:
+  base_spawn_interval: 1.7
+  spawn_acceleration_rate: 0.006
+  jitter_range: [0.75, 1.25]
+  min_spawn_interval: 0.55     # hard ceiling on spawn rate
+  spawn_margin_ratio: 0.12     # horizontal inset of the spawn band (fraction of width)
+  fruit_initial_delay_range: [0.5, 1.2]
+
+# ----------------------------------------------------------------------------
+# Entities
+# ----------------------------------------------------------------------------
+fruits:
+  elasticity: 0.35
+  friction: 0.6
+  launch:
+    min_height_ratio: 0.55     # apex height / screen height measured from spawn point
+    max_height_ratio: 0.88
+    min_angle_deg: 2.0         # launch angle from the vertical axis
+    max_angle_deg: 24.0
+  subtypes:
+    watermelon:
+      weight: 1.45
+      radius: 52
+      points: 30
+      color: [76, 175, 80]
+      spawn_weight: 1.0
+      sprite_path: assets/sprites/fruits/watermelon.png
+    coconut:
+      weight: 1.25
+      radius: 38
+      points: 20
+      color: [141, 98, 66]
+      spawn_weight: 1.2
+      sprite_path: assets/sprites/fruits/coconut.png
+    apple:
+      weight: 1.0
+      radius: 34
+      points: 10
+      color: [229, 57, 53]
+      spawn_weight: 2.2
+      sprite_path: assets/sprites/fruits/apple.png
+    banana:
+      weight: 0.9
+      radius: 34
+      points: 15
+      color: [253, 216, 53]
+      spawn_weight: 1.5
+      sprite_path: assets/sprites/fruits/banana.png
+    berry:
+      weight: 0.7
+      radius: 24
+      points: 15
+      color: [142, 36, 170]
+      spawn_weight: 1.8
+      sprite_path: assets/sprites/fruits/berry.png
+
+bomb:
+  weight: 1.1
+  radius: 34
+  color: [40, 40, 48]
+  elasticity: 0.35
+  friction: 0.6
+  initial_delay_range: [8.0, 14.0]   # random dead-time before the first bomb
+  interval_range: [4.5, 9.0]
+  launch:
+    min_height_ratio: 0.55
+    max_height_ratio: 0.85
+    min_angle_deg: 2.0
+    max_angle_deg: 22.0
+  sprite_path: assets/sprites/bombs/bomb.png
+
+limiter:
+  initial_delay_range: [14.0, 22.0]
+  interval_range: [14.0, 24.0]
+  min_y_ratio: 0.28            # spawn height range (fraction of screen height)
+  max_y_ratio: 0.62
+  max_incline_deg: 12.0        # inclination alpha in [-max, +max]
+  advance_speed: 150.0         # px/s extension speed
+  retract_speed: 520.0         # px/s retraction speed after expiry
+  lifetime_range: [7.0, 12.0]  # total life T_limit in seconds
+  thickness: 34.0
+  tip_hit_radius: 62.0         # palm-vs-tip hitbox radius
+  elasticity: 0.45
+  friction: 0.7
+  sprite_path: assets/sprites/limiters/trunk.png
+  beam_sprite_path: assets/sprites/limiters/beam.png
+
+holder:
+  weight: 1.0
+  radius: 36
+  initial_delay_range: [16.0, 26.0]
+  interval_range: [16.0, 28.0]
+  hold_duration_range: [1.5, 3.0]    # required accumulated fist time D_hold
+  elasticity: 0.3
+  friction: 0.6
+  launch:
+    min_height_ratio: 0.55
+    max_height_ratio: 0.8
+    min_angle_deg: 2.0
+    max_angle_deg: 18.0
+  active_sprite_path: assets/sprites/holders/holder_active.png
+  defused_sprite_path: assets/sprites/holders/holder_defused.png
+  active_color: [255, 112, 67]
+  defused_color: [102, 187, 106]
+
+thrower:
+  weight: 1.0
+  radius: 36
+  initial_delay_range: [28.0, 40.0]
+  interval_range: [18.0, 30.0]
+  expiration_range: [7.0, 10.0]      # expiry timer before it counts as failed
+  elasticity: 0.3
+  friction: 0.6
+  launch:
+    min_height_ratio: 0.5
+    max_height_ratio: 0.75
+    min_angle_deg: 2.0
+    max_angle_deg: 16.0
+  zone_thickness: 110.0              # target zone depth in px
+  zone_length_ratio: 0.32            # zone length as fraction of the screen edge
+  sprite_path: assets/sprites/throwers/thrower.png
+  zone_sprite_path: assets/sprites/throwers/target_portal.png
+  color: [66, 165, 245]
+
+# ----------------------------------------------------------------------------
+# Scoring and versus rules
+# Score_i = sum(fruit points) + holders*holder_points + throwers*thrower_points
+#           + floor(survival_seconds * time_multiplier)
+#           + goals*football_goal_points - penalty points (competition/points mode)
+# ----------------------------------------------------------------------------
+scoring:
+  holder_points: 50            # awarded on defusal
+  thrower_points: 75
+  time_multiplier: 0.5         # points per survived second (M_time)
+  penalty_points_loss: 25      # competition mode with point penalties
+  football_goal_points: 100
+
+football:
+  goal_bottom_edge_ratio: 0.15 # goal extends along this fraction of the bottom edge per side
+
+# ----------------------------------------------------------------------------
+# Hand gesture classification and interaction
+# Ratios are scale-invariant (relative to palm size or wrist distances).
+# ----------------------------------------------------------------------------
+gestures:
+  extended_ratio: 1.12                 # tip-wrist / pip-wrist above this => finger extended
+  fist_curl_ratio: 1.0                 # tip-wrist / pip-wrist below this => finger curled
+  min_curled_fingers: 3                # curled fingers required for CLOSED_FIST
+  knife_finger_spread_max_ratio: 0.42  # adjacent tip distance / palm size
+  throw_inertia_multiplier: 1.15
+  debounce_frames: 2                   # frames a posture must persist before switching
+  velocity_window_s: 0.12              # history window for velocity estimation
+  velocity_smoothing: 0.5              # EMA factor in [0, 1] (1 = no smoothing)
+  knife_thickness: 22.0                # px added to knife segment for contact tests
+  grab_radius: 46.0                    # px added to entity radius for grabbing
+  grab_grace_s: 0.35                   # open-hand memory window preceding a fist
+  hand_lost_grace_s: 0.30              # time a vanished hand keeps its grabbed item
+  hand_hit_radius: 54.0                # palm hitbox radius for open-palm checks
+
+# ----------------------------------------------------------------------------
+# Computer vision
+# ----------------------------------------------------------------------------
+tracking:
+  default_mode: pose_hands             # pose_hands | hands_only
+  pose_model_file: pose_landmarker_lite.task
+  hand_model_file: hand_landmarker.task
+  pose_model_url: https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
+  hand_model_url: https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task
+  min_detection_confidence: 0.5
+  min_tracking_confidence: 0.5
+  assign_max_distance: 0.45            # max normalized wrist distance to link a hand to a pose
+  max_inference_side: 640              # downscale frames above this size before inference
+  camera:
+    default_index: 0
+    request_width: 1280
+    request_height: 720
+    request_fps: 30
+    index_options: [0, 1, 2, 3, 4]
+
+# ----------------------------------------------------------------------------
+# Players and look & feel
+# ----------------------------------------------------------------------------
+players:
+  colors:                              # Player 1..4: cyan, coral red, lime green, gold
+    - [0, 229, 255]
+    - [255, 99, 99]
+    - [118, 255, 3]
+    - [255, 215, 0]
+  names: ["Player 1", "Player 2", "Player 3", "Player 4"]
+
+ui:
+  background_color: [14, 16, 28]
+  panel_color: [24, 28, 48]
+  accent_color: [255, 171, 64]
+  text_color: [236, 239, 244]
+  muted_color: [140, 150, 175]
+  danger_color: [255, 82, 82]
+  camera_dim_alpha: 70                 # dark overlay (0-255) on the camera feed
+  trail_length: 14                     # slice trail points
+  trail_lifetime_s: 0.25
+  popup_lifetime_s: 1.0
+  icon_path: assets/icon.ico
+  heart_sprite_path: assets/sprites/ui/heart.png
+  background_sprite_path: assets/sprites/ui/background.png
+  logo_sprite_path: assets/sprites/ui/logo.png
+
+# ----------------------------------------------------------------------------
+# Default values of the match setup screen
+# ----------------------------------------------------------------------------
+defaults:
+  players: 1
+  mode: 1p_endurance                   # 1p_endurance | np_endurance | np_competition | 2p_football
+  lives: 3
+  timespan: 120
+  instant_death_bombs: false
+  instant_death_grenades: false
+  enable_bombs: true
+  enable_limiters: true
+  enable_holders: true
+  enable_throwers: true
+  competition_penalty: lives           # lives | points
+  tracking_mode: pose_hands
+  life_options: [1, 2, 3, 5, 7, 10]
+  timespan_options: [30, 60, 120, 180, 300]
