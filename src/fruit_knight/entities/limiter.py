@@ -22,7 +22,7 @@ class BarrierLimiter(BaseEntity):
 
     kind = EntityKind.LIMITER
 
-    def __init__(self, world: PhysicsWorld, cfg: LimiterConfig, side: str, y: float, incline_deg: float, lifetime: float) -> None:
+    def __init__(self, world: PhysicsWorld, cfg: LimiterConfig, side: str, y: float, incline_deg: float, lifetime: float, variant: str = "trunk") -> None:
         """Create limiter at a screen edge.
 
         :param world: physics world.
@@ -37,9 +37,12 @@ class BarrierLimiter(BaseEntity):
         :type incline_deg: float
         :param lifetime: total lifetime ``T_limit`` in seconds.
         :type lifetime: float
+        :param variant: visual style, ``"trunk"`` or ``"beam"``.
+        :type variant: str
         """
         super().__init__(world)
         self.cfg = cfg
+        self.variant = variant
         self.side = side
         self.incline_deg = incline_deg
         alpha = math.radians(incline_deg)

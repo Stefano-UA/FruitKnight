@@ -162,7 +162,7 @@ class EntityFactory:
         side = self.rng.choice(("left", "right"))
         y = rand_range(self.rng, (c.min_y_ratio * h, c.max_y_ratio * h))
         incline = self.rng.uniform(-c.max_incline_deg, c.max_incline_deg)
-        return BarrierLimiter(self.world, c, side, y, incline, rand_range(self.rng, c.lifetime_range))
+        return BarrierLimiter(self.world, c, side, y, incline, rand_range(self.rng, c.lifetime_range), self.rng.choice(("trunk", "beam")))
 
 
 def remove_all(entities: list[BaseEntity]) -> None:
