@@ -29,3 +29,4 @@ assets/models/*.task
 Thumbs.db
 *.tmp
 *.log
+docs/source/_apidoc/
