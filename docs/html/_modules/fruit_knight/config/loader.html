@@ -509,8 +509,57 @@
         <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="s2">"gestures.debounce_frames &gt;= 1 and velocity_smoothing in (0, 1]"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"1p_endurance"</span><span class="p">,</span> <span class="s2">"np_endurance"</span><span class="p">,</span> <span class="s2">"np_competition"</span><span class="p">,</span> <span class="s2">"2p_football"</span><span class="p">}:</span>
         <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown defaults.mode '</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">difficulty</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">difficulties</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"defaults.difficulty '</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">difficulty</span><span class="si">}</span><span class="s2">' is not listed in 'difficulties'"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">default_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"pose_hands"</span><span class="p">,</span> <span class="s2">"hands_only"</span><span class="p">}:</span>
         <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown tracking.default_mode '</span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">default_mode</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_deep_merge</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">patch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Merge a nested override mapping over a base mapping without mutating either.</span>
+
+<span class="sd">    :param base: original values.</span>
+<span class="sd">    :type base: dict[str, typing.Any]</span>
+<span class="sd">    :param patch: values replacing or extending ``base``.</span>
+<span class="sd">    :type patch: dict[str, typing.Any]</span>
+<span class="sd">    :return: merged copy.</span>
+<span class="sd">    :rtype: dict[str, typing.Any]</span>
+<span class="sd">    """</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">patch</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">_deep_merge</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">merged</span>
+
+
+<div class="viewcode-block" id="apply_difficulty">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.config.loader.html#fruit_knight.config.apply_difficulty">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_difficulty</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">GameConfig</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Build the configuration of a difficulty level.</span>
+
+<span class="sd">    :param cfg: base configuration (the values outside ``difficulties``).</span>
+<span class="sd">    :type cfg: fruit_knight.config.schema.GameConfig</span>
+<span class="sd">    :param name: key inside ``cfg.difficulties``.</span>
+<span class="sd">    :type name: str</span>
+<span class="sd">    :return: validated copy with the level's overrides applied.</span>
+<span class="sd">    :rtype: fruit_knight.config.schema.GameConfig</span>
+<span class="sd">    :raises ConfigError: when the level is unknown or its overrides are invalid.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">difficulties</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown difficulty '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="n">overrides</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">difficulties</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">overrides</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">overrides</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cfg</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">_deep_merge</span><span class="p">(</span><span class="n">dataclasses</span><span class="o">.</span><span class="n">asdict</span><span class="p">(</span><span class="n">cfg</span><span class="p">),</span> <span class="n">overrides</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_build</span><span class="p">(</span><span class="n">GameConfig</span><span class="p">,</span> <span class="n">merged</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+        <span class="n">validate</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConfigError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"difficulty '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 
@@ -535,6 +584,8 @@
         <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span><span class="s2">"configuration root must be a mapping"</span><span class="p">)</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">_build</span><span class="p">(</span><span class="n">GameConfig</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
     <span class="n">validate</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">difficulties</span><span class="p">:</span>  <span class="c1"># fail early on broken difficulty overrides</span>
+        <span class="n">apply_difficulty</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cfg</span></div>
 
 </pre></div>

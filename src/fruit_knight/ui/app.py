@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import ctypes
 import logging
+import sys
 
 import pygame
 
@@ -20,7 +22,20 @@ from fruit_knight.vision.camera import STATUS_CLOSED, STATUS_FAILED
 from fruit_knight.vision.pipeline import VisionPipeline
 
 log = logging.getLogger(__name__)
-ICON_PREVIEW_SIZE = 64
+ICON_PREVIEW_SIZE = 128
+APP_USER_MODEL_ID = "fruitknight.rehabilitation.game"
+# Limits of the match window relative to the desktop, and smallest accepted width in pixels.
+MAX_DESKTOP_WIDTH_RATIO, MAX_DESKTOP_HEIGHT_RATIO = 0.96, 0.88
+MIN_GAME_WIDTH = 480
+
+
+def set_windows_app_id() -> None:
+    """Give the process its own Windows taskbar identity so the window icon replaces Python's."""
+    if sys.platform.startswith("win"):
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_USER_MODEL_ID)  # type: ignore[attr-defined]
+        except (AttributeError, OSError):
+            log.debug("Could not set the Windows AppUserModelID")
 
 
 class App:
@@ -34,18 +49,22 @@ class App:
         :param use_camera: disable to force mouse mode even when a camera exists.
         :type use_camera: bool
         """
+        set_windows_app_id()  # must precede window creation for the taskbar icon
         pygame.init()
         self.cfg = cfg
         self.use_camera = use_camera
-        self.size = (cfg.window.width, cfg.window.height)
-        flags = pygame.FULLSCREEN | pygame.SCALED if cfg.window.fullscreen else 0
-        self.window = pygame.display.set_mode(self.size, flags)
-        pygame.display.set_caption(cfg.window.title)
+        self.menu_size = (cfg.window.width, cfg.window.height)
+        self.game_size = self.menu_size
+        self.size = self.menu_size
+        self._flags = pygame.FULLSCREEN | pygame.SCALED if cfg.window.fullscreen else 0
         try:
             ensure_icon(resource_path(cfg.ui.icon_path))
         except OSError:
             log.warning("Could not create %s", cfg.ui.icon_path)
+        # The icon is set before the window exists so the OS uses it for the taskbar entry too.
         pygame.display.set_icon(build_icon_surface(ICON_PREVIEW_SIZE))
+        self.window = pygame.display.set_mode(self.size, self._flags)
+        pygame.display.set_caption(cfg.window.title)
         self.clock = pygame.time.Clock()
         self.assets = AssetManager()
         self.sprites = SpriteProvider(cfg, self.assets)
@@ -71,8 +90,46 @@ class App:
         :type kwargs: typing.Any
         """
         self.current.on_exit()
+        if name in ("menu", "setup"):
+            self.pipeline.stop_tracking()  # models stay loaded only between the camera screen and the match
+        self.set_window_size(self.game_size if name == "game" else self.menu_size)
         self.current = self.screens[name]
         self.current.on_enter(**kwargs)
+
+    def set_window_size(self, size: tuple[int, int]) -> None:
+        """Resize the window (no-op when it already has that size or runs fullscreen).
+
+        :param size: new window width and height in pixels.
+        :type size: tuple[int, int]
+        """
+        if size == self.size or self._flags:
+            return
+        self.size = size
+        self.window = pygame.display.set_mode(size, self._flags)
+
+    def compute_game_size(self) -> tuple[int, int]:
+        """Derive the match window size so it has the aspect ratio of the selected camera area.
+
+        :return: width and height in pixels; the menu size when no camera frame is available.
+        :rtype: tuple[int, int]
+        """
+        frame, _ = self.pipeline.camera.read_latest()
+        if not self.use_camera or frame is None or self._flags:
+            return self.menu_size
+        frame_h, frame_w = frame.shape[:2]
+        roi = self.setup.roi
+        aspect = (roi.w * frame_w) / (roi.h * frame_h)
+        height = float(self.menu_size[1])
+        width = height * aspect
+        desktop_w, desktop_h = pygame.display.get_desktop_sizes()[0]
+        max_w, max_h = desktop_w * MAX_DESKTOP_WIDTH_RATIO, desktop_h * MAX_DESKTOP_HEIGHT_RATIO
+        scale = min(1.0, max_w / width, max_h / height)
+        width, height = width * scale, height * scale
+        if width < MIN_GAME_WIDTH:  # very narrow areas: grow, then re-fit the height
+            height, width = height * MIN_GAME_WIDTH / width, float(MIN_GAME_WIDTH)
+            if height > max_h:
+                width, height = width * max_h / height, max_h
+        return int(width) // 2 * 2, int(height) // 2 * 2
 
     def ensure_camera(self, index: int, restart: bool = False) -> None:
         """Make sure the camera of a given index is streaming or being opened.
@@ -92,10 +149,10 @@ class App:
     def start_match(self) -> None:
         """Start (or restart) a match with the current setup and calibration."""
         self.pipeline.set_roi(self.setup.roi)
-        self.pipeline.stop_tracking()
         self.ensure_camera(self.setup.camera_index)
         if self.use_camera:
-            self.pipeline.start_tracking(self.setup.tracking_mode, self.setup.players)
+            self.pipeline.ensure_tracking(self.setup.tracking_mode, self.setup.players)
+        self.game_size = self.compute_game_size()
         self.goto("game")
 
     # ----------------------------------------------------------------- loop

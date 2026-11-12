@@ -230,7 +230,8 @@ class BaseGameMode(ABC):
         angle = math.atan2(hand_velocity[1], hand_velocity[0]) if any(hand_velocity) else 0.0
         self.emit(GameEvent("slice", fruit.position, player_id, "", {
             "subtype": fruit.subtype, "radius": fruit.radius, "angle": angle,
-            "velocity": fruit.velocity, "spin": fruit.body.angle if fruit.body else 0.0,
+            "velocity": fruit.velocity, "body_angle": fruit.body.angle if fruit.body else 0.0,
+            "angular_velocity": fruit.body.angular_velocity if fruit.body else 0.0, "g_eff": fruit.g_eff,
         }))
         self.emit(GameEvent("popup", fruit.position, player_id, f"+{fruit.points}"))
         fruit.remove()

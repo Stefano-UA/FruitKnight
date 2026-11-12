@@ -20,9 +20,9 @@ from fruit_knight.vision.hands import HandSample
 Vec = tuple[float, float]
 Color = tuple[int, int, int]
 # Visual-only constants of the effects.
-HALF_GRAVITY = 900.0
-HALF_SEPARATION_SPEED = 160.0
-HALF_LIFETIME = 1.4
+HALF_SEPARATION_SPEED = 110.0  # px/s drift of each half away from the cut line
+HALF_SPIN_DELTA = 0.8  # rad/s added in opposite directions to the halves
+HALF_LIFETIME = 1.6
 PARTICLE_GRAVITY = 700.0
 
 
@@ -36,6 +36,7 @@ class _Half:
     angle: float
     spin: float
     life: float
+    gravity: float
 
 
 @dataclass
@@ -72,15 +73,15 @@ class _Ring:
     max_life: float
 
 
-def split_sprite(sprite: pygame.Surface, cut_angle: float) -> list[tuple[pygame.Surface, Vec]]:
+def split_sprite(sprite: pygame.Surface, cut_angle: float) -> list[tuple[pygame.Surface, float]]:
     """Cut a sprite in two along a line through its centre.
 
     :param sprite: sprite to cut.
     :type sprite: pygame.Surface
     :param cut_angle: direction of the cut line in radians.
     :type cut_angle: float
-    :return: two halves with the unit normal pointing away from the cut for each.
-    :rtype: list[tuple[pygame.Surface, tuple[float, float]]]
+    :return: two halves, each with the side sign (+1 or -1) relative to the cut normal.
+    :rtype: list[tuple[pygame.Surface, float]]
     """
     w, h = sprite.get_size()
     cx, cy = w / 2, h / 2
@@ -98,7 +99,7 @@ def split_sprite(sprite: pygame.Surface, cut_angle: float) -> list[tuple[pygame.
         pygame.draw.polygon(mask, (255, 255, 255, 255), poly)
         half = sprite.copy()
         half.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        halves.append((half, (sign * n[0], sign * n[1])))
+        halves.append((half, sign))
     return halves
 
 
@@ -172,11 +173,17 @@ class EffectsManager:
         data = event.data
         sprite = self.sprites.fruit(data["subtype"])
         vx, vy = data.get("velocity", (0.0, 0.0))
-        for half, normal in split_sprite(sprite, data.get("angle", 0.0)):
+        body_angle = data.get("body_angle", 0.0)
+        cut = data.get("angle", 0.0)  # cut direction in screen space
+        # The sprite is drawn rotated by the body angle, so the cut line is expressed in sprite space.
+        nx, ny = -math.sin(cut), math.cos(cut)
+        for half, sign in split_sprite(sprite, cut - body_angle):
+            # Both halves inherit the fruit's velocity, spin and gravity; they only drift slowly apart.
             self._halves.append(_Half(
                 half, [event.pos[0], event.pos[1]],
-                [vx * 0.6 + normal[0] * HALF_SEPARATION_SPEED, vy * 0.6 + normal[1] * HALF_SEPARATION_SPEED - 80.0],
-                data.get("spin", 0.0), self._rng.uniform(-220, 220), HALF_LIFETIME,
+                [vx + sign * nx * HALF_SEPARATION_SPEED, vy + sign * ny * HALF_SEPARATION_SPEED],
+                body_angle, data.get("angular_velocity", 0.0) + sign * HALF_SPIN_DELTA,
+                HALF_LIFETIME, data.get("g_eff", self.cfg.physics.gravity),
             ))
         self._burst(event.pos, tuple(self.cfg.fruits.subtypes[data["subtype"]].color), 14, 320.0)  # type: ignore[arg-type]
         self._rings.append(_Ring(event.pos, data.get("radius", 30.0) * 1.8, (255, 255, 255), 0.18, 0.18))
@@ -234,7 +241,7 @@ class EffectsManager:
         :type dt: float
         """
         for h in self._halves:
-            h.vel[1] += HALF_GRAVITY * dt
+            h.vel[1] += h.gravity * dt
             h.pos[0] += h.vel[0] * dt
             h.pos[1] += h.vel[1] * dt
             h.angle += h.spin * dt

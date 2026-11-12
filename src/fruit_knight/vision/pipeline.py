@@ -101,6 +101,20 @@ class VisionPipeline:
             self._thread = threading.Thread(target=self._run, daemon=True, name="vision-worker")
             self._thread.start()
 
+    def ensure_tracking(self, mode: TrackingMode, players: int) -> None:
+        """Start tracking only if it is not already running with the same settings.
+
+        :param mode: tracking pipeline to use.
+        :type mode: fruit_knight.utils.constants.TrackingMode
+        :param players: number of players.
+        :type players: int
+        """
+        alive = self._thread is not None and self._thread.is_alive()
+        same = (self._mode, self._players) == (mode, players)
+        if self._tracking_wanted and alive and same and self.tracker_status != "error":
+            return
+        self.start_tracking(mode, players)
+
     def stop_tracking(self) -> None:
         """Disable processing and stop the worker thread."""
         self._tracking_wanted = False

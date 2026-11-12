@@ -472,6 +472,23 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="VisionPipeline.ensure_tracking">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.pipeline.html#fruit_knight.vision.pipeline.VisionPipeline.ensure_tracking">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ensure_tracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">TrackingMode</span><span class="p">,</span> <span class="n">players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Start tracking only if it is not already running with the same settings.</span>
+
+<span class="sd">        :param mode: tracking pipeline to use.</span>
+<span class="sd">        :type mode: fruit_knight.utils.constants.TrackingMode</span>
+<span class="sd">        :param players: number of players.</span>
+<span class="sd">        :type players: int</span>
+<span class="sd">        """</span>
+        <span class="n">alive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+        <span class="n">same</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_players</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">players</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_wanted</span> <span class="ow">and</span> <span class="n">alive</span> <span class="ow">and</span> <span class="n">same</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracker_status</span> <span class="o">!=</span> <span class="s2">"error"</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_tracking</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">players</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="VisionPipeline.stop_tracking">
 <a class="viewcode-back" href="../../../_apidoc/fruit_knight.vision.pipeline.html#fruit_knight.vision.pipeline.VisionPipeline.stop_tracking">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stop_tracking</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

@@ -7,7 +7,9 @@ from enum import Enum
 
 import pygame
 
+from fruit_knight.config import apply_difficulty
 from fruit_knight.modes import create_mode
+from fruit_knight.rendering.sprites import SpriteProvider
 from fruit_knight.rendering.camera_view import frame_to_surface
 from fruit_knight.rendering.draw_utils import alpha_rect
 from fruit_knight.rendering.effects import EffectsManager
@@ -46,12 +48,14 @@ class GameScreen(Screen):
         """
         app = self.app
         self.size = app.size
-        self.mode = create_mode(app.cfg, app.setup, self.size)
-        self.hand_tracker = HandTracker(app.cfg.gestures, self.size)
-        self.simulator = MouseHandSimulator(app.cfg.gestures)
-        self.effects = EffectsManager(app.cfg, app.sprites, app.fonts)
-        self.entity_renderer = EntityRenderer(app.sprites, app.fonts)
-        self.hud = Hud(app.sprites, app.fonts)
+        cfg = apply_difficulty(app.cfg, app.setup.difficulty)  # base values + difficulty overrides
+        sprites = SpriteProvider(cfg, app.assets)
+        self.mode = create_mode(cfg, app.setup, self.size)
+        self.hand_tracker = HandTracker(cfg.gestures, self.size)
+        self.simulator = MouseHandSimulator(cfg.gestures)
+        self.effects = EffectsManager(cfg, sprites, app.fonts)
+        self.entity_renderer = EntityRenderer(sprites, app.fonts)
+        self.hud = Hud(sprites, app.fonts)
         self.countdown_overlay = CountdownOverlay(app.fonts)
         self.pause_overlay = PauseOverlay(app.fonts)
         self.colors = [tuple(c) for c in app.cfg.players.colors]
@@ -63,10 +67,6 @@ class GameScreen(Screen):
         self.poses: list = []
         self._last_stamp = -1.0
         self.clock_now = time.monotonic()
-
-    def on_exit(self) -> None:
-        """Stop tracking when leaving the match."""
-        self.app.pipeline.stop_tracking()
 
     # ----------------------------------------------------------------- events
     def handle_event(self, event: pygame.event.Event) -> None:

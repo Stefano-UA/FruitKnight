@@ -387,15 +387,18 @@
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.GameConfig.players"><code class="docutils literal notranslate"><span class="pre">GameConfig.players</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.GameConfig.ui"><code class="docutils literal notranslate"><span class="pre">GameConfig.ui</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.GameConfig.audio"><code class="docutils literal notranslate"><span class="pre">GameConfig.audio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.GameConfig.difficulties"><code class="docutils literal notranslate"><span class="pre">GameConfig.difficulties</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.GameConfig.defaults"><code class="docutils literal notranslate"><span class="pre">GameConfig.defaults</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.apply_difficulty"><code class="docutils literal notranslate"><span class="pre">apply_difficulty()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.html#fruit_knight.config.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.loader.html">fruit_knight.config.loader module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.ConfigError"><code class="docutils literal notranslate"><span class="pre">ConfigError</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.apply_difficulty"><code class="docutils literal notranslate"><span class="pre">apply_difficulty()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
 </ul>
 </li>
@@ -418,6 +421,7 @@
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PlayersConfig"><code class="docutils literal notranslate"><span class="pre">PlayersConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig"><code class="docutils literal notranslate"><span class="pre">UiConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.AudioConfig"><code class="docutils literal notranslate"><span class="pre">AudioConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DifficultyConfig"><code class="docutils literal notranslate"><span class="pre">DifficultyConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig"><code class="docutils literal notranslate"><span class="pre">GameConfig</span></code></a></li>
 </ul>
@@ -595,6 +599,7 @@
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.enable_holders"><code class="docutils literal notranslate"><span class="pre">MatchSetup.enable_holders</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.enable_throwers"><code class="docutils literal notranslate"><span class="pre">MatchSetup.enable_throwers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.competition_penalty"><code class="docutils literal notranslate"><span class="pre">MatchSetup.competition_penalty</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.difficulty"><code class="docutils literal notranslate"><span class="pre">MatchSetup.difficulty</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.tracking_mode"><code class="docutils literal notranslate"><span class="pre">MatchSetup.tracking_mode</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.camera_index"><code class="docutils literal notranslate"><span class="pre">MatchSetup.camera_index</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.modes.html#fruit_knight.modes.MatchSetup.roi"><code class="docutils literal notranslate"><span class="pre">MatchSetup.roi</span></code></a></li>
@@ -800,6 +805,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="fruit_knight.ui.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="fruit_knight.ui.app.html">fruit_knight.ui.app module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fruit_knight.ui.app.html#fruit_knight.ui.app.set_windows_app_id"><code class="docutils literal notranslate"><span class="pre">set_windows_app_id()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="fruit_knight.ui.app.html#fruit_knight.ui.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a></li>
 </ul>
 </li>

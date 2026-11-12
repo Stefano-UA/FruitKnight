@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 
 Range = tuple[float, float]
 Color = tuple[int, int, int]
@@ -178,6 +179,7 @@ class GestureConfig:
     debounce_frames: int = 2
     velocity_window_s: float = 0.12
     velocity_smoothing: float = 0.5
+    knife_min_speed: float = 350.0
     knife_thickness: float = 22.0
     grab_radius: float = 46.0
     grab_grace_s: float = 0.35
@@ -250,6 +252,14 @@ class AudioConfig:
 
 
 @dataclass
+class DifficultyConfig:
+    """One difficulty level: a label plus a partial configuration merged over the base values."""
+
+    label: str = ""
+    overrides: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class DefaultsConfig:
     """Initial values of the match setup screen."""
 
@@ -265,6 +275,7 @@ class DefaultsConfig:
     enable_throwers: bool = True
     competition_penalty: str = "lives"
     tracking_mode: str = "pose_hands"
+    difficulty: str = "normal"
     life_options: list[int] = field(default_factory=lambda: [1, 2, 3, 5, 7, 10])
     timespan_options: list[int] = field(default_factory=lambda: [30, 60, 120, 180, 300])
 
@@ -289,4 +300,5 @@ class GameConfig:
     players: PlayersConfig = field(default_factory=PlayersConfig)
     ui: UiConfig = field(default_factory=UiConfig)
     audio: AudioConfig = field(default_factory=AudioConfig)
+    difficulties: dict[str, DifficultyConfig] = field(default_factory=dict)
     defaults: DefaultsConfig = field(default_factory=DefaultsConfig)

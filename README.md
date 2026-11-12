@@ -55,7 +55,8 @@ official storage into `assets/models/` on first use.
    holders and throwers, and the tracking mode (*Full Pose + Hands* with coloured mannequins, or
    *Lightweight Hands-Only* with screen zones).
 2. **Camera & play area**: camera index selector with a mirrored live preview; drag a rectangle with the
-   mouse to crop the active play area (**Reset to Full Frame** restores the whole image).
+   mouse to crop the active play area (**Reset to Full Frame** restores the whole image). The selected tracking model is loaded here
+   and the detected skeletons/hands are drawn live. The match window then takes the aspect ratio of the selected area.
 3. **Countdown (5 s)** over the live feed with each player's coloured skeleton/hands visible, then the match.
    **SPACE** pauses (physics, timers and spawners freeze); **SPACE** again runs the same 5-second countdown
    before resuming. **ESC** from the pause screen returns to the menu.
@@ -65,7 +66,7 @@ official storage into `assets/models/` on first use.
 
 | State | How to do it | What it does |
 |---|---|---|
-| `KNIFE_HAND` | Four fingers extended **and together** | The **only** state that slices fruits and detonates bombs |
+| `KNIFE_HAND` | Four fingers extended **and together**, **moving** (faster than `knife_min_speed`) | The **only** state that slices fruits and detonates bombs; a still hand never cuts |
 | `OPEN_PALM` | Four fingers extended and **spread** | Stops a limiter placed on its leading tip; ready state before grabbing; never cuts |
 | `CLOSED_FIST` | Fingers curled | Open → fist near an object grabs it (it follows the palm and the hand is occupied) |
 | `RELEASE_WITH_INERTIA` | Fist → open hand while holding | Object is thrown with the smoothed hand velocity × `throw_inertia_multiplier` |
@@ -106,6 +107,13 @@ Score_i = Σ fruit points + holders·holder_points + throwers·thrower_points + 
 Spawn pressure grows with match time: `interval(t) = max(min_spawn_interval, base · exp(−rate · t))` with random jitter.
 In multi-player modes spawned fruits and hazards are assigned to a target player (coloured halo, spawn inside that player's sector);
 anyone can slice or interact to earn points, but the penalty goes to the assigned player (the bomb penalty goes to whoever slices it).
+
+## Difficulty levels
+
+The setup screen offers **Very Easy, Easy, Normal and Hard**. They are defined in the `difficulties` section of
+`config/settings.yaml`: the values outside that section are the *Normal* level, and every other level lists only the keys it
+overrides (any key of the file: gravity, spawn curve, fruit/bomb launch heights and angles, limiter speed and lifetime,
+holder hold times, thrower expiry, hit radii, `knife_min_speed`...). Edit those blocks to tune a level, or add new ones.
 
 ## Configuration
 

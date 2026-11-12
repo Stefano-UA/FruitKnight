@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from fruit_knight.entities import BarrierLimiter, Bomb, Fruit, Projectile
 from fruit_knight.modes.events import GameEvent
 from fruit_knight.utils.constants import HandState
-from fruit_knight.utils.math_utils import distance, point_segment_distance
+from fruit_knight.utils.math_utils import distance, norm, point_segment_distance
 from fruit_knight.vision.hands import HandSample
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -202,6 +202,9 @@ class InteractionSystem:
         :param s: current hand sample.
         :type s: fruit_knight.vision.hands.HandSample
         """
+        # A knife hand only cuts while it moves: a still hand never slices or detonates anything.
+        if norm(s.velocity) < self.cfg.knife_min_speed:
+            return
         for entity in list(self.mode.entities):
             if not isinstance(entity, Projectile) or not entity.alive or entity.held_by is not None:
                 continue

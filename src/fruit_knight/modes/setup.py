@@ -39,6 +39,7 @@ class MatchSetup:
     enable_holders: bool = True
     enable_throwers: bool = True
     competition_penalty: str = "lives"
+    difficulty: str = "normal"
     tracking_mode: TrackingMode = TrackingMode.POSE_HANDS
     camera_index: int = 0
     roi: RoiRect = field(default_factory=RoiRect.full)
@@ -58,7 +59,7 @@ class MatchSetup:
             instant_death_bombs=d.instant_death_bombs, instant_death_grenades=d.instant_death_grenades,
             enable_bombs=d.enable_bombs, enable_limiters=d.enable_limiters,
             enable_holders=d.enable_holders, enable_throwers=d.enable_throwers,
-            competition_penalty=d.competition_penalty, tracking_mode=TrackingMode(d.tracking_mode),
+            competition_penalty=d.competition_penalty, difficulty=d.difficulty, tracking_mode=TrackingMode(d.tracking_mode),
             camera_index=cfg.tracking.camera.default_index,
         )
         setup.set_mode(setup.mode)

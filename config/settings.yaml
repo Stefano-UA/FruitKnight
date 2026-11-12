@@ -183,6 +183,7 @@ gestures:
   debounce_frames: 2                   # frames a posture must persist before switching
   velocity_window_s: 0.12              # history window for velocity estimation
   velocity_smoothing: 0.5              # EMA factor in [0, 1] (1 = no smoothing)
+  knife_min_speed: 350.0               # px/s the hand must move to cut (a still knife hand never cuts)
   knife_thickness: 22.0                # px added to knife segment for contact tests
   grab_radius: 46.0                    # px added to entity radius for grabbing
   grab_grace_s: 0.35                   # open-hand memory window preceding a fist
@@ -268,5 +269,98 @@ defaults:
   enable_throwers: true
   competition_penalty: lives           # lives | points
   tracking_mode: pose_hands
+  difficulty: normal                   # key of the 'difficulties' section
   life_options: [1, 2, 3, 5, 7, 10]
   timespan_options: [30, 60, 120, 180, 300]
+
+# ----------------------------------------------------------------------------
+# Difficulty levels. The values above are the NORMAL level. Each level below lists only what
+# it changes: any key of this file (physics, spawning, fruits, bomb, limiter, holder, thrower,
+# gestures, scoring...) can be overridden, nested exactly like in the sections above, e.g.
+#   fruits: {launch: {max_angle_deg: 10}, subtypes: {apple: {radius: 40}}}
+# ----------------------------------------------------------------------------
+difficulties:
+  very_easy:
+    label: "Very Easy"
+    overrides:
+      physics: {gravity: 430.0}
+      spawning: {base_spawn_interval: 3.0, spawn_acceleration_rate: 0.002, min_spawn_interval: 1.2}
+      fruits:
+        launch: {min_height_ratio: 0.5, max_height_ratio: 0.7, min_angle_deg: 0.0, max_angle_deg: 10.0}
+      bomb:
+        initial_delay_range: [20.0, 30.0]
+        interval_range: [14.0, 22.0]
+        launch: {min_height_ratio: 0.5, max_height_ratio: 0.7, min_angle_deg: 0.0, max_angle_deg: 10.0}
+      limiter:
+        initial_delay_range: [25.0, 35.0]
+        interval_range: [25.0, 40.0]
+        advance_speed: 80.0
+        max_incline_deg: 5.0
+        lifetime_range: [10.0, 14.0]
+        tip_hit_radius: 80.0
+      holder:
+        initial_delay_range: [25.0, 35.0]
+        interval_range: [30.0, 45.0]
+        hold_duration_range: [0.8, 1.5]
+      thrower:
+        initial_delay_range: [45.0, 60.0]
+        interval_range: [35.0, 50.0]
+        expiration_range: [12.0, 16.0]
+      gestures: {knife_min_speed: 200.0, knife_thickness: 32.0, grab_radius: 70.0}
+  easy:
+    label: "Easy"
+    overrides:
+      physics: {gravity: 520.0}
+      spawning: {base_spawn_interval: 2.5, spawn_acceleration_rate: 0.004, min_spawn_interval: 0.8}
+      fruits:
+        launch: {min_height_ratio: 0.45, max_height_ratio: 0.8, max_angle_deg: 16.0}
+      bomb:
+        initial_delay_range: [12.0, 20.0]
+        interval_range: [8.0, 14.0]
+        launch: {min_height_ratio: 0.55, max_height_ratio: 0.8, max_angle_deg: 16.0}
+      limiter:
+        initial_delay_range: [18.0, 28.0]
+        interval_range: [20.0, 32.0]
+        advance_speed: 110.0
+        max_incline_deg: 8.0
+        lifetime_range: [8.0, 13.0]
+        tip_hit_radius: 70.0
+      holder:
+        initial_delay_range: [20.0, 30.0]
+        interval_range: [22.0, 36.0]
+        hold_duration_range: [1.0, 2.2]
+      thrower:
+        initial_delay_range: [35.0, 50.0]
+        interval_range: [26.0, 40.0]
+        expiration_range: [9.0, 12.0]
+      gestures: {knife_min_speed: 280.0, knife_thickness: 27.0, grab_radius: 56.0}
+  normal:
+    label: "Normal"
+    overrides: {}
+  hard:
+    label: "Hard"
+    overrides:
+      physics: {gravity: 760.0}
+      spawning: {base_spawn_interval: 1.4, spawn_acceleration_rate: 0.01, min_spawn_interval: 0.3}
+      fruits:
+        launch: {min_height_ratio: 0.3, max_height_ratio: 0.95, min_angle_deg: 4.0, max_angle_deg: 32.0}
+      bomb:
+        initial_delay_range: [3.0, 6.0]
+        interval_range: [2.5, 5.0]
+        launch: {min_height_ratio: 0.5, max_height_ratio: 0.95, max_angle_deg: 30.0}
+      limiter:
+        initial_delay_range: [10.0, 16.0]
+        interval_range: [10.0, 16.0]
+        advance_speed: 230.0
+        max_incline_deg: 16.0
+        lifetime_range: [6.0, 10.0]
+        tip_hit_radius: 54.0
+      holder:
+        initial_delay_range: [10.0, 18.0]
+        interval_range: [12.0, 20.0]
+        hold_duration_range: [2.5, 4.0]
+      thrower:
+        initial_delay_range: [18.0, 28.0]
+        interval_range: [14.0, 22.0]
+        expiration_range: [5.0, 7.0]
+      gestures: {knife_min_speed: 450.0, knife_thickness: 18.0, grab_radius: 38.0}

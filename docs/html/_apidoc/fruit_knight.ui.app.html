@@ -364,6 +364,12 @@
           <section id="module-fruit_knight.ui.app">
 <span id="fruit-knight-ui-app-module"></span><h1>fruit_knight.ui.app module<a class="headerlink" href="#module-fruit_knight.ui.app" title="Link to this heading">¶</a></h1>
 <p>Application shell: window, screen state machine and shared services.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fruit_knight.ui.app.set_windows_app_id">
+<span class="sig-prename descclassname"><span class="pre">fruit_knight.ui.app.</span></span><span class="sig-name descname"><span class="pre">set_windows_app_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/ui/app.html#set_windows_app_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.ui.app.set_windows_app_id" title="Link to this definition">¶</a></dt>
+<dd><p>Give the process its own Windows taskbar identity so the window icon replaces Python’s.</p>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="fruit_knight.ui.app.App">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fruit_knight.ui.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/ui/app.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.ui.app.App" title="Link to this definition">¶</a></dt>
@@ -379,6 +385,31 @@
 <li><p><strong>name</strong> (<em>str</em>) – screen key (<code class="docutils literal notranslate"><span class="pre">menu</span></code>, <code class="docutils literal notranslate"><span class="pre">setup</span></code>, <code class="docutils literal notranslate"><span class="pre">camera</span></code>, <code class="docutils literal notranslate"><span class="pre">game</span></code>, <code class="docutils literal notranslate"><span class="pre">game_over</span></code>).</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>) – parameters forwarded to <code class="docutils literal notranslate"><span class="pre">on_enter</span></code>.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fruit_knight.ui.app.App.set_window_size">
+<span class="sig-name descname"><span class="pre">set_window_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/ui/app.html#App.set_window_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.ui.app.App.set_window_size" title="Link to this definition">¶</a></dt>
+<dd><p>Resize the window (no-op when it already has that size or runs fullscreen).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – new window width and height in pixels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fruit_knight.ui.app.App.compute_game_size">
+<span class="sig-name descname"><span class="pre">compute_game_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/ui/app.html#App.compute_game_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.ui.app.App.compute_game_size" title="Link to this definition">¶</a></dt>
+<dd><p>Derive the match window size so it has the aspect ratio of the selected camera area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>width and height in pixels; the menu size when no camera frame is available.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -469,8 +500,11 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">fruit_knight.ui.app module</a><ul>
+<li><a class="reference internal" href="#fruit_knight.ui.app.set_windows_app_id"><code class="docutils literal notranslate"><span class="pre">set_windows_app_id()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.ui.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
 <li><a class="reference internal" href="#fruit_knight.ui.app.App.goto"><code class="docutils literal notranslate"><span class="pre">App.goto()</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.ui.app.App.set_window_size"><code class="docutils literal notranslate"><span class="pre">App.set_window_size()</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.ui.app.App.compute_game_size"><code class="docutils literal notranslate"><span class="pre">App.compute_game_size()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.ui.app.App.ensure_camera"><code class="docutils literal notranslate"><span class="pre">App.ensure_camera()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.ui.app.App.start_match"><code class="docutils literal notranslate"><span class="pre">App.start_match()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.ui.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>

@@ -18,7 +18,7 @@ ROW_H = 56
 LEFT_X, RIGHT_X = 90, 740
 LABEL_W, CONTROL_W = 230, 280
 TOGGLE_W = 450
-TOP = 175
+TOP = 160
 
 
 class ModeSetupScreen(Screen):
@@ -79,6 +79,8 @@ class ModeSetupScreen(Screen):
 
         # ---- left column: choices
         rows = [
+            ("difficulty", "Difficulty", [d.label for d in cfg.difficulties.values()], cfg.difficulties[s.difficulty].label,
+             {d.label: k for k, d in cfg.difficulties.items()}),
             ("players", "Number of players", [str(n) for n in range(1, 5)], str(s.players), {str(n): n for n in range(1, 5)}),
             ("mode", "Game mode", [MODE_LABELS[m] for m in ModeId], MODE_LABELS[s.mode], {MODE_LABELS[m]: m for m in ModeId}),
             ("lives", "Initial lives", [str(v) for v in cfg.defaults.life_options], str(s.lives), {str(v): v for v in cfg.defaults.life_options}),
@@ -86,12 +88,13 @@ class ModeSetupScreen(Screen):
             ("penalty", "Competition penalty", list(PENALTY_LABELS.values()), PENALTY_LABELS[s.competition_penalty], {v: k for k, v in PENALTY_LABELS.items()}),
             ("tracking", "Tracking mode", list(TRACKING_LABELS.values()), TRACKING_LABELS[s.tracking_mode], {v: k for k, v in TRACKING_LABELS.items()}),
         ]
-        if str(s.lives) not in rows[2][2]:
-            rows[2][2].append(str(s.lives))
-            rows[2][4][str(s.lives)] = s.lives
-        if str(s.timespan) not in rows[3][2]:
-            rows[3][2].append(str(s.timespan))
-            rows[3][4][str(s.timespan)] = s.timespan
+        by_key = {row[0]: row for row in rows}
+        if str(s.lives) not in by_key["lives"][2]:
+            by_key["lives"][2].append(str(s.lives))
+            by_key["lives"][4][str(s.lives)] = s.lives
+        if str(s.timespan) not in by_key["timespan"][2]:
+            by_key["timespan"][2].append(str(s.timespan))
+            by_key["timespan"][4][str(s.timespan)] = s.timespan
         for i, (key, text, opts, current, mapping) in enumerate(rows):
             y = TOP + i * ROW_H
             label(text, LEFT_X, y + 4)
@@ -165,7 +168,9 @@ class ModeSetupScreen(Screen):
         s: MatchSetup = self.app.setup
         before_mode, before_players = s.mode, s.players
         self.notice = ""
-        if key == "players":
+        if key == "difficulty":
+            s.difficulty = str(value)
+        elif key == "players":
             s.set_players(int(value))  # type: ignore[arg-type]
             if s.players != value:
                 self.notice = "Player count adjusted to the selected mode"
@@ -194,6 +199,6 @@ class ModeSetupScreen(Screen):
         :type surface: pygame.Surface
         """
         self.draw_background(surface)
-        self.draw_card(surface, pygame.Rect(LEFT_X - 24, TOP - 30, LABEL_W + CONTROL_W + 108, 6 * ROW_H + 40))
-        self.draw_card(surface, pygame.Rect(RIGHT_X - 24, TOP - 58, TOGGLE_W + 48, 6 * ROW_H + 68))
+        self.draw_card(surface, pygame.Rect(LEFT_X - 24, TOP - 30, LABEL_W + CONTROL_W + 108, 7 * ROW_H + 40))
+        self.draw_card(surface, pygame.Rect(RIGHT_X - 24, TOP - 58, TOGGLE_W + 48, 7 * ROW_H + 40))
         super().draw(surface)

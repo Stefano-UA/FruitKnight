@@ -7,7 +7,9 @@ import pygame_gui
 
 from fruit_knight.rendering.camera_view import fit_rect, frame_to_surface
 from fruit_knight.rendering.draw_utils import alpha_rect
+from fruit_knight.rendering.overlay import draw_hands, draw_poses
 from fruit_knight.ui.screens.base import Screen
+from fruit_knight.vision.hands import HandSample, HandTracker
 from fruit_knight.vision.camera import STATUS_CLOSED, STATUS_FAILED, STATUS_OPENING
 from fruit_knight.vision.roi import RoiRect
 
@@ -32,6 +34,16 @@ class CameraROIScreen(Screen):
         self.preview_surface: pygame.Surface | None = None
         self.frame_size = (16, 9)
         self.app.ensure_camera(self.app.setup.camera_index)
+        self.hand_tracker: HandTracker | None = None
+        self.samples: dict[str, HandSample] = {}
+        self.poses: list = []
+        self._last_stamp = -1.0
+        self._tracker_size = (0, 0)
+        self.colors = [tuple(c) for c in cfg.players.colors]
+        if self.app.use_camera:
+            # Load the selected model now so detections are visible while framing the play area.
+            self.app.pipeline.set_roi(self.app.setup.roi)
+            self.app.pipeline.ensure_tracking(self.app.setup.tracking_mode, self.app.setup.players)
         options = [str(i) for i in cfg.tracking.camera.index_options]
         current = str(self.app.setup.camera_index)
         if current not in options:
@@ -78,14 +90,17 @@ class CameraROIScreen(Screen):
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.drag_start is not None:
             end = self.to_norm(event.pos)
             setup.roi = RoiRect.from_corners(*self.drag_start, *end)
+            self.app.pipeline.set_roi(setup.roi)
             self.drag_start = self.drag_now = None
         elif event.type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED and event.ui_element == self.camera_drop:
             setup.camera_index = int(event.text)
             setup.roi = RoiRect.full()
+            self.app.pipeline.set_roi(setup.roi)
             self.app.ensure_camera(setup.camera_index, restart=True)
         elif event.type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_element == self.reset_btn:
                 setup.roi = RoiRect.full()
+                self.app.pipeline.set_roi(setup.roi)
             elif event.ui_element == self.back:
                 self.app.goto("setup")
             elif event.ui_element == self.start:
@@ -102,8 +117,53 @@ class CameraROIScreen(Screen):
         if frame is not None:
             self.frame_size = (frame.shape[1], frame.shape[0])
             self.preview_surface = frame_to_surface(frame, self.video_rect().size)
+        result = self.app.pipeline.latest()
+        if result is not None and result.frame is not None and result.timestamp != self._last_stamp:
+            self._last_stamp = result.timestamp
+            size = self._saved_roi_rect().size  # landmarks are drawn inside the saved play area
+            if self.hand_tracker is None or self._tracker_size != size:
+                self.hand_tracker = HandTracker(self.app.cfg.gestures, size)
+                self._tracker_size = size
+            self.samples = self.hand_tracker.update(result.hands, (result.frame.shape[1], result.frame.shape[0]), result.timestamp)
+            self.poses = result.poses
 
     # ----------------------------------------------------------------- draw
+    def _saved_roi_rect(self) -> pygame.Rect:
+        """Compute the on-screen rectangle of the committed play area.
+
+        :return: ROI rectangle in window coordinates.
+        :rtype: pygame.Rect
+        """
+        v, roi = self.video_rect(), self.app.setup.roi
+        return pygame.Rect(v.x + roi.x * v.w, v.y + roi.y * v.h, max(1, roi.w * v.w), max(1, roi.h * v.h))
+
+    def _draw_detections(self, surface: pygame.Surface) -> None:
+        """Draw the live skeletons and hands recognised inside the play area.
+
+        :param surface: window surface.
+        :type surface: pygame.Surface
+        """
+        rect = self._saved_roi_rect()
+        layer = pygame.Surface(rect.size, pygame.SRCALPHA)
+        draw_poses(layer, self.poses, self.colors, self.app.fonts)  # type: ignore[arg-type]
+        draw_hands(layer, self.samples, self.colors, self.app.fonts)  # type: ignore[arg-type]
+        surface.blit(layer, rect.topleft)
+
+    def _tracking_status_text(self) -> tuple[str, tuple[int, int, int]]:
+        """Describe the state of the tracking model for the side panel.
+
+        :return: message and colour.
+        :rtype: tuple[str, tuple[int, int, int]]
+        """
+        pipeline = self.app.pipeline
+        if not self.app.use_camera:
+            return "Tracking off (mouse mode)", (140, 150, 175)
+        if pipeline.tracker_status == "ready":
+            return "Tracking model ready", (118, 255, 3)
+        if pipeline.tracker_status == "error":
+            return f"Tracking error: {pipeline.error[:60]}", (255, 82, 82)
+        return "Loading tracking model...", (255, 171, 64)
+
     def _current_roi_rect(self) -> pygame.Rect:
         """Compute the on-screen rectangle of the selected play area.
 
@@ -141,6 +201,7 @@ class CameraROIScreen(Screen):
                     alpha_rect(surface, (0, 0, 0), 150, r)
             pygame.draw.rect(surface, (255, 171, 64), roi, 3)
             fonts.draw_centered(surface, "ACTIVE PLAY AREA", 18, (255, 171, 64), (roi.centerx, roi.y + 16))
+            self._draw_detections(surface)
         else:
             self.draw_card(surface, PREVIEW_AREA)
             if status == STATUS_FAILED:
@@ -158,4 +219,6 @@ class CameraROIScreen(Screen):
         for i, line in enumerate(("Drag with the mouse over", "the preview to crop the play", "area (preview is mirrored)")):
             fonts.draw_centered(surface, line, 17, (140, 150, 175), (PANEL_X + PANEL_W / 2, 206 + i * 24), bold=False, shadow=False)
         fonts.draw_centered(surface, f"ROI: {info}", 16, (236, 239, 244), (PANEL_X + PANEL_W / 2, 300), bold=False, shadow=False)
+        text, color = self._tracking_status_text()
+        fonts.draw_centered(surface, text, 16, color, (PANEL_X + PANEL_W / 2, 440), bold=True)
         super().draw(surface)

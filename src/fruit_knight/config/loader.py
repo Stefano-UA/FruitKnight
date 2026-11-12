@@ -147,8 +147,54 @@ def validate(cfg: GameConfig) -> None:
         raise ConfigError("gestures.debounce_frames >= 1 and velocity_smoothing in (0, 1]")
     if cfg.defaults.mode not in {"1p_endurance", "np_endurance", "np_competition", "2p_football"}:
         raise ConfigError(f"unknown defaults.mode '{cfg.defaults.mode}'")
+    if cfg.defaults.difficulty not in cfg.difficulties:
+        raise ConfigError(f"defaults.difficulty '{cfg.defaults.difficulty}' is not listed in 'difficulties'")
     if cfg.tracking.default_mode not in {"pose_hands", "hands_only"}:
         raise ConfigError(f"unknown tracking.default_mode '{cfg.tracking.default_mode}'")
+
+
+def _deep_merge(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
+    """Merge a nested override mapping over a base mapping without mutating either.
+
+    :param base: original values.
+    :type base: dict[str, typing.Any]
+    :param patch: values replacing or extending ``base``.
+    :type patch: dict[str, typing.Any]
+    :return: merged copy.
+    :rtype: dict[str, typing.Any]
+    """
+    merged = dict(base)
+    for key, value in patch.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = _deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def apply_difficulty(cfg: GameConfig, name: str) -> GameConfig:
+    """Build the configuration of a difficulty level.
+
+    :param cfg: base configuration (the values outside ``difficulties``).
+    :type cfg: fruit_knight.config.schema.GameConfig
+    :param name: key inside ``cfg.difficulties``.
+    :type name: str
+    :return: validated copy with the level's overrides applied.
+    :rtype: fruit_knight.config.schema.GameConfig
+    :raises ConfigError: when the level is unknown or its overrides are invalid.
+    """
+    if name not in cfg.difficulties:
+        raise ConfigError(f"unknown difficulty '{name}'")
+    overrides = cfg.difficulties[name].overrides
+    if not overrides:
+        return cfg
+    merged = _deep_merge(dataclasses.asdict(cfg), overrides)
+    try:
+        result = _build(GameConfig, merged, "")
+        validate(result)
+    except ConfigError as exc:
+        raise ConfigError(f"difficulty '{name}': {exc}") from exc
+    return result
 
 
 def load_config(path: str | Path | None = None) -> GameConfig:
@@ -170,4 +216,6 @@ def load_config(path: str | Path | None = None) -> GameConfig:
         raise ConfigError("configuration root must be a mapping")
     cfg = _build(GameConfig, raw, "")
     validate(cfg)
+    for name in cfg.difficulties:  # fail early on broken difficulty overrides
+        apply_difficulty(cfg, name)
     return cfg

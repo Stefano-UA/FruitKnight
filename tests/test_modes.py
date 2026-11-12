@@ -18,7 +18,7 @@ SIZE = (CFG.window.width, CFG.window.height)
 DT = 1 / 60
 
 
-def hand(pid: int, state: HandState, palm: tuple[float, float], vel=(0.0, 0.0), label: str = "Right") -> dict[str, HandSample]:
+def hand(pid: int, state: HandState, palm: tuple[float, float], vel=None, label: str = "Right") -> dict[str, HandSample]:
     """Create one synthetic hand sample.
 
     :param pid: player id.
@@ -27,14 +27,16 @@ def hand(pid: int, state: HandState, palm: tuple[float, float], vel=(0.0, 0.0), 
     :type state: fruit_knight.utils.constants.HandState
     :param palm: palm centre in pixels.
     :type palm: tuple[float, float]
-    :param vel: hand velocity.
-    :type vel: tuple[float, float]
+    :param vel: hand velocity; a knife hand defaults to a fast stroke, other postures to rest.
+    :type vel: tuple[float, float] | None
     :param label: hand label.
     :type label: str
     :return: sample mapping.
     :rtype: dict[str, fruit_knight.vision.hands.HandSample]
     """
     key = f"p{pid}:{label}"
+    if vel is None:
+        vel = (900.0, 0.0) if state == HandState.KNIFE_HAND else (0.0, 0.0)
     return {key: HandSample(key, pid, state, palm, (palm[0], palm[1] - 60), (palm[0], palm[1] + 30), vel)}
 
 
@@ -340,3 +342,68 @@ def test_long_random_simulation_is_stable(mode: ModeId, players: int) -> None:
             break
     assert m.elapsed > 10
     assert len(m.entities) < 200
+
+
+def test_still_knife_hand_does_not_cut() -> None:
+    """A knife hand must move to cut: resting on fruits and bombs does nothing."""
+    m = new_mode(ModeId.ENDURANCE_1P)
+    fruit = m.factory.fruit(600, 1, "apple")
+    bomb = m.factory.bomb(700, 1)
+    m.entities.extend([fruit, bomb])
+    place(fruit, (600, 300))
+    place(bomb, (700, 300))
+    still = CFG.gestures.knife_min_speed * 0.5
+    m.update(DT, hand(1, HandState.KNIFE_HAND, (600, 330), vel=(still, 0.0)))
+    m.update(DT, hand(1, HandState.KNIFE_HAND, (700, 330), vel=(0.0, 0.0)))
+    assert not fruit.sliced and not bomb.exploded and m.players[1].lives == 3
+    m.update(DT, hand(1, HandState.KNIFE_HAND, (600, 330), vel=(CFG.gestures.knife_min_speed * 2, 0.0)))
+    assert fruit.sliced
+
+
+def test_difficulty_overrides_merge_over_base() -> None:
+    """Each level changes only what it lists; normal equals the base values."""
+    from fruit_knight.config import apply_difficulty
+
+    base = CFG
+    normal = apply_difficulty(base, "normal")
+    easy, hard = apply_difficulty(base, "very_easy"), apply_difficulty(base, "hard")
+    assert normal.physics.gravity == base.physics.gravity
+    assert easy.physics.gravity < base.physics.gravity < hard.physics.gravity
+    assert easy.spawning.base_spawn_interval > hard.spawning.base_spawn_interval
+    assert easy.fruits.subtypes["apple"].points == base.fruits.subtypes["apple"].points  # untouched keys survive
+    assert easy.fruits.launch.max_angle_deg < hard.fruits.launch.max_angle_deg
+    assert [d.label for d in base.difficulties.values()] == ["Very Easy", "Easy", "Normal", "Hard"]
+
+
+def test_difficulty_config_drives_the_mode() -> None:
+    """A mode built from a harder config launches faster and falls harder."""
+    from fruit_knight.config import apply_difficulty
+
+    speeds = {}
+    for name in ("very_easy", "hard"):
+        cfg = apply_difficulty(CFG, name)
+        m = create_mode(cfg, MatchSetup(players=1, mode=ModeId.ENDURANCE_1P), SIZE, random.Random(1))
+        speeds[name] = m.factory.fruit(600, 1, "apple").g_eff
+    assert speeds["hard"] > speeds["very_easy"]
+
+
+def test_sliced_halves_inherit_inertia() -> None:
+    """Halves keep the fruit velocity, rotation speed and gravity instead of spinning wildly."""
+    import pygame
+
+    from fruit_knight.modes.events import GameEvent
+    from fruit_knight.rendering import AssetManager, EffectsManager, FontCache, SpriteProvider
+
+    pygame.init()
+    pygame.display.set_mode((100, 100))
+    fx = EffectsManager(CFG, SpriteProvider(CFG, AssetManager()), FontCache())
+    fx.handle(GameEvent("slice", (300.0, 300.0), 1, "", {
+        "subtype": "apple", "radius": 34, "angle": 0.7, "velocity": (120.0, -400.0),
+        "body_angle": 0.5, "angular_velocity": 2.0, "g_eff": 620.0,
+    }))
+    assert len(fx._halves) == 2
+    for half in fx._halves:
+        assert abs(half.spin - 2.0) <= 1.0  # same rotation speed as the fruit, small split
+        assert abs(half.vel[0] - 120.0) < 120 and abs(half.vel[1] + 400.0) < 120
+        assert half.gravity == 620.0
+    pygame.quit()

@@ -359,7 +359,9 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">ctypes</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pygame</span>
 
@@ -377,7 +379,23 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">fruit_knight.vision.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisionPipeline</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">ICON_PREVIEW_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">ICON_PREVIEW_SIZE</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">APP_USER_MODEL_ID</span> <span class="o">=</span> <span class="s2">"fruitknight.rehabilitation.game"</span>
+<span class="c1"># Limits of the match window relative to the desktop, and smallest accepted width in pixels.</span>
+<span class="n">MAX_DESKTOP_WIDTH_RATIO</span><span class="p">,</span> <span class="n">MAX_DESKTOP_HEIGHT_RATIO</span> <span class="o">=</span> <span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.88</span>
+<span class="n">MIN_GAME_WIDTH</span> <span class="o">=</span> <span class="mi">480</span>
+
+
+<div class="viewcode-block" id="set_windows_app_id">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.ui.app.html#fruit_knight.ui.app.set_windows_app_id">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_windows_app_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Give the process its own Windows taskbar identity so the window icon replaces Python's."""</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"win"</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">shell32</span><span class="o">.</span><span class="n">SetCurrentProcessExplicitAppUserModelID</span><span class="p">(</span><span class="n">APP_USER_MODEL_ID</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Could not set the Windows AppUserModelID"</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="App">
@@ -393,18 +411,22 @@
 <span class="sd">        :param use_camera: disable to force mouse mode even when a camera exists.</span>
 <span class="sd">        :type use_camera: bool</span>
 <span class="sd">        """</span>
+        <span class="n">set_windows_app_id</span><span class="p">()</span>  <span class="c1"># must precede window creation for the taskbar icon</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_camera</span> <span class="o">=</span> <span class="n">use_camera</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-        <span class="n">flags</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">FULLSCREEN</span> <span class="o">|</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SCALED</span> <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">fullscreen</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
-        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flags</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">FULLSCREEN</span> <span class="o">|</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SCALED</span> <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">fullscreen</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ensure_icon</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">icon_path</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Could not create </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">icon_path</span><span class="p">)</span>
+        <span class="c1"># The icon is set before the window exists so the OS uses it for the taskbar entry too.</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_icon</span><span class="p">(</span><span class="n">build_icon_surface</span><span class="p">(</span><span class="n">ICON_PREVIEW_SIZE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="n">AssetManager</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sprites</span> <span class="o">=</span> <span class="n">SpriteProvider</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">)</span>
@@ -432,8 +454,52 @@
 <span class="sd">        :type kwargs: typing.Any</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">on_exit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"menu"</span><span class="p">,</span> <span class="s2">"setup"</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">stop_tracking</span><span class="p">()</span>  <span class="c1"># models stay loaded only between the camera screen and the match</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_window_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_size</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"game"</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">on_enter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.set_window_size">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.ui.app.html#fruit_knight.ui.app.App.set_window_size">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_window_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Resize the window (no-op when it already has that size or runs fullscreen).</span>
+
+<span class="sd">        :param size: new window width and height in pixels.</span>
+<span class="sd">        :type size: tuple[int, int]</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.compute_game_size">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.ui.app.html#fruit_knight.ui.app.App.compute_game_size">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_game_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Derive the match window size so it has the aspect ratio of the selected camera area.</span>
+
+<span class="sd">        :return: width and height in pixels; the menu size when no camera frame is available.</span>
+<span class="sd">        :rtype: tuple[int, int]</span>
+<span class="sd">        """</span>
+        <span class="n">frame</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">read_latest</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_camera</span> <span class="ow">or</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flags</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span>
+        <span class="n">frame_h</span><span class="p">,</span> <span class="n">frame_w</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">roi</span>
+        <span class="n">aspect</span> <span class="o">=</span> <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">frame_w</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">h</span> <span class="o">*</span> <span class="n">frame_h</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="n">aspect</span>
+        <span class="n">desktop_w</span><span class="p">,</span> <span class="n">desktop_h</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">get_desktop_sizes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">max_w</span><span class="p">,</span> <span class="n">max_h</span> <span class="o">=</span> <span class="n">desktop_w</span> <span class="o">*</span> <span class="n">MAX_DESKTOP_WIDTH_RATIO</span><span class="p">,</span> <span class="n">desktop_h</span> <span class="o">*</span> <span class="n">MAX_DESKTOP_HEIGHT_RATIO</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_w</span> <span class="o">/</span> <span class="n">width</span><span class="p">,</span> <span class="n">max_h</span> <span class="o">/</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="n">scale</span>
+        <span class="k">if</span> <span class="n">width</span> <span class="o">&lt;</span> <span class="n">MIN_GAME_WIDTH</span><span class="p">:</span>  <span class="c1"># very narrow areas: grow, then re-fit the height</span>
+            <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="n">MIN_GAME_WIDTH</span> <span class="o">/</span> <span class="n">width</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">MIN_GAME_WIDTH</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">height</span> <span class="o">&gt;</span> <span class="n">max_h</span><span class="p">:</span>
+                <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">max_h</span> <span class="o">/</span> <span class="n">height</span><span class="p">,</span> <span class="n">max_h</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="App.ensure_camera">
@@ -459,10 +525,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">start_match</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Start (or restart) a match with the current setup and calibration."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">set_roi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">roi</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">stop_tracking</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ensure_camera</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">camera_index</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_camera</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">start_tracking</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">tracking_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">players</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">ensure_tracking</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">tracking_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">players</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_game_size</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="s2">"game"</span><span class="p">)</span></div>
 
 

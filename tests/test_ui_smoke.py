@@ -96,3 +96,24 @@ def test_icon_is_a_valid_ico(tmp_path) -> None:
     data = path.read_bytes()
     assert data[:4] == b"\x00\x00\x01\x00" and data[4] == 4
     pygame.quit()
+
+
+def test_game_window_follows_roi_aspect_ratio() -> None:
+    """The match window takes the aspect ratio of the selected camera area."""
+    import numpy as np
+
+    from fruit_knight.vision.roi import RoiRect
+
+    app = App(load_config(), use_camera=True)
+    try:
+        app.pipeline.camera._frame, app.pipeline.camera._counter = np.zeros((480, 640, 3), np.uint8), 1
+        app.setup.roi = RoiRect(0.0, 0.0, 0.5, 1.0)  # 320x480 px: portrait, aspect 2:3
+        w, h = app.compute_game_size()
+        assert abs(w / h - 320 / 480) < 0.02
+        app.setup.roi = RoiRect.full()
+        w, h = app.compute_game_size()
+        assert abs(w / h - 640 / 480) < 0.02
+        app.set_window_size((w, h))
+        assert app.window.get_size() == (w, h)
+    finally:
+        pygame.quit()

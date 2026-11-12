@@ -434,6 +434,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="fruit_knight.vision.pipeline.VisionPipeline.ensure_tracking">
+<span class="sig-name descname"><span class="pre">ensure_tracking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/vision/pipeline.html#VisionPipeline.ensure_tracking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.vision.pipeline.VisionPipeline.ensure_tracking" title="Link to this definition">¶</a></dt>
+<dd><p>Start tracking only if it is not already running with the same settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<a class="reference internal" href="fruit_knight.utils.constants.html#fruit_knight.utils.constants.TrackingMode" title="fruit_knight.utils.constants.TrackingMode"><em>fruit_knight.utils.constants.TrackingMode</em></a>) – tracking pipeline to use.</p></li>
+<li><p><strong>players</strong> (<em>int</em>) – number of players.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="fruit_knight.vision.pipeline.VisionPipeline.stop_tracking">
 <span class="sig-name descname"><span class="pre">stop_tracking</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/vision/pipeline.html#VisionPipeline.stop_tracking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.vision.pipeline.VisionPipeline.stop_tracking" title="Link to this definition">¶</a></dt>
 <dd><p>Disable processing and stop the worker thread.</p>
@@ -525,6 +539,7 @@
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.camera_ready"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.camera_ready</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.set_roi"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.set_roi()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.start_tracking"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.start_tracking()</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.ensure_tracking"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.ensure_tracking()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.stop_tracking"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.stop_tracking()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.latest"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.latest()</span></code></a></li>
 <li><a class="reference internal" href="#fruit_knight.vision.pipeline.VisionPipeline.shutdown"><code class="docutils literal notranslate"><span class="pre">VisionPipeline.shutdown()</span></code></a></li>
