@@ -19,11 +19,11 @@ countdown_seconds: 5.0         # pre-match and post-pause countdown
 physics:
   gravity: 620.0               # base gravity g0 in px/s^2 (g_eff = g0 * weight)
   substeps: 2                  # physics sub-steps per rendered frame
-  damping: 1.0                 # Pymunk velocity damping (1.0 = no air drag)
+  damping: 1.1                 # Pymunk velocity damping (1.0 = no air drag)
   spawn_offset: 40.0           # px below the bottom edge where entities spawn
   exit_margin: 90.0            # px beyond the screen edge before an entity counts as exited
   max_spin: 4.0                # max random angular velocity at spawn (rad/s)
-  max_entity_speed: 3200.0     # clamp for thrown entity speed (px/s)
+  max_entity_speed: 2400.0     # clamp for thrown entity speed (px/s)
 
 # ----------------------------------------------------------------------------
 # Dynamic difficulty: fruit stream spawn interval over match time t:
@@ -31,10 +31,10 @@ physics:
 # Hazard intervals are divided by exp(rate * t / 2) so they also tighten slowly.
 # ----------------------------------------------------------------------------
 spawning:
-  base_spawn_interval: 1.7
+  base_spawn_interval: 2
   spawn_acceleration_rate: 0.006
   jitter_range: [0.75, 1.25]
-  min_spawn_interval: 0.55     # hard ceiling on spawn rate
+  min_spawn_interval: 0.35     # hard ceiling on spawn rate
   spawn_margin_ratio: 0.12     # horizontal inset of the spawn band (fraction of width)
   fruit_initial_delay_range: [0.5, 1.2]
 
@@ -45,13 +45,13 @@ fruits:
   elasticity: 0.35
   friction: 0.6
   launch:
-    min_height_ratio: 0.55     # apex height / screen height measured from spawn point
-    max_height_ratio: 0.88
+    min_height_ratio: 0.35     # apex height / screen height measured from spawn point
+    max_height_ratio: 0.92
     min_angle_deg: 2.0         # launch angle from the vertical axis
     max_angle_deg: 24.0
   subtypes:
     watermelon:
-      weight: 1.45
+      weight: 1.85
       radius: 52
       points: 30
       color: [76, 175, 80]
@@ -88,15 +88,15 @@ fruits:
 
 bomb:
   weight: 1.1
-  radius: 34
+  radius: 38
   color: [40, 40, 48]
   elasticity: 0.35
   friction: 0.6
-  initial_delay_range: [8.0, 14.0]   # random dead-time before the first bomb
+  initial_delay_range: [5.0, 10.0]   # random dead-time before the first bomb
   interval_range: [4.5, 9.0]
   launch:
-    min_height_ratio: 0.55
-    max_height_ratio: 0.85
+    min_height_ratio: 0.65
+    max_height_ratio: 0.92
     min_angle_deg: 2.0
     max_angle_deg: 22.0
   sprite_path: assets/sprites/bombs/bomb.png
@@ -206,7 +206,7 @@ tracking:
     default_index: 0
     request_width: 1280
     request_height: 720
-    request_fps: 30
+    request_fps: 60
     index_options: [0, 1, 2, 3, 4]
 
 # ----------------------------------------------------------------------------
