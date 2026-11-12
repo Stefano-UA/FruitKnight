@@ -26,10 +26,21 @@ Requirements: Python 3.10+ and a webcam (the game also works with the mouse when
 ./scripts/run.sh --no-camera    # play with the mouse (left = fist, right = open palm, none = knife)
 ```
 
-On Windows run the scripts from Git Bash (or WSL). Manual launch:
+On Windows, launch manually from PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+$env:PYTHONPATH = "src"
+python -m fruit_knight.main
+```
+
+On Linux, macOS, Git Bash, or WSL:
 
 ```bash
-python -m venv .venv && source .venv/bin/activate      # .venv\Scripts\activate on Windows
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 PYTHONPATH=src python -m fruit_knight.main
 ```

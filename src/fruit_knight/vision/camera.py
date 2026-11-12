@@ -20,6 +20,8 @@ STATUS_READY = "ready"
 STATUS_FAILED = "failed"
 # Consecutive failed reads tolerated before the stream is declared dead.
 MAX_READ_FAILURES = 120
+# Seconds a single backend may take to open and deliver its first frame.
+OPEN_TIMEOUT_S = 6.0
 
 
 class CameraCapture:
@@ -40,24 +42,56 @@ class CameraCapture:
         self.status = STATUS_CLOSED
         self.index = cfg.default_index
 
+    def _try_backend(self, index: int, backend: int, result: list) -> None:
+        """Open one backend and verify it delivers a frame (runs in a helper thread).
+
+        :param index: camera device index.
+        :type index: int
+        :param backend: OpenCV backend constant.
+        :type backend: int
+        :param result: list receiving the working capture, if any.
+        :type result: list
+        """
+        cap = cv2.VideoCapture(index, backend)
+        if not cap.isOpened():
+            cap.release()
+            return
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, self._cfg.request_width)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self._cfg.request_height)
+        cap.set(cv2.CAP_PROP_FPS, self._cfg.request_fps)
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        ok, _ = cap.read()
+        if ok:
+            result.append(cap)
+        else:
+            cap.release()
+
     def _open(self, index: int) -> cv2.VideoCapture | None:
-        """Open a camera device, preferring DirectShow on Windows.
+        """Open a camera trying several backends, each with a time limit.
+
+        Windows drivers can block inside ``VideoCapture``; a backend that does not answer in time is
+        abandoned and the next one is tried.
 
         :param index: camera device index.
         :type index: int
         :return: opened capture or ``None``.
         :rtype: cv2.VideoCapture | None
         """
-        backends = [cv2.CAP_DSHOW, cv2.CAP_ANY] if sys.platform.startswith("win") else [cv2.CAP_ANY]
+        if sys.platform.startswith("win"):
+            backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]
+        else:
+            backends = [cv2.CAP_ANY]
         for backend in backends:
-            cap = cv2.VideoCapture(index, backend)
-            if cap.isOpened():
-                cap.set(cv2.CAP_PROP_FRAME_WIDTH, self._cfg.request_width)
-                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self._cfg.request_height)
-                cap.set(cv2.CAP_PROP_FPS, self._cfg.request_fps)
-                cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-                return cap
-            cap.release()
+            result: list = []
+            worker = threading.Thread(target=self._try_backend, args=(index, backend, result), daemon=True)
+            worker.start()
+            worker.join(timeout=OPEN_TIMEOUT_S)
+            if result:
+                log.info("Camera %d opened with backend %d", index, backend)
+                return result[0]
+            log.warning("Camera %d: backend %d failed or timed out", index, backend)
+            if self._stop.is_set():
+                break
         return None
 
     def _run(self, index: int) -> None:

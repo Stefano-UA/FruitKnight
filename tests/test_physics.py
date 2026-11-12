@@ -59,7 +59,10 @@ def test_heavier_objects_move_faster() -> None:
 
 def test_projectile_follows_ballistic_apex() -> None:
     """Simulated fruit reaches the configured apex height above its spawn point."""
-    world, factory = make_world()
+    import dataclasses
+
+    world = PhysicsWorld(dataclasses.replace(CFG.physics, damping=1.0), SIZE)  # ideal ballistics: no drag
+    factory = EntityFactory(CFG, world, random.Random(7))
     fruit = factory.fruit(SIZE[0] / 2, 1, "apple")
     spawn_y = fruit.position[1]
     expected = -fruit.velocity[1] ** 2 / (2 * fruit.g_eff)
