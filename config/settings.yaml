@@ -184,7 +184,7 @@ gestures:
   debounce_frames: 6                   # frames a posture must persist before switching
   velocity_window_s: 0.5               # history window for velocity estimation
   velocity_smoothing: 0.5              # EMA factor in [0, 1] (1 = no smoothing)
-  knife_min_speed: 350.0               # px/s the hand must move to cut (a still knife hand never cuts)
+  knife_min_speed: 120.0               # px/s the hand must move to cut (a still knife hand never cuts)
   knife_thickness: 22.0                # px added to knife segment for contact tests
   grab_radius: 46.0                    # px added to entity radius for grabbing
   grab_grace_s: 0.35                   # open-hand memory window preceding a fist
@@ -204,6 +204,7 @@ tracking:
   min_tracking_confidence: 0.5
   assign_max_distance: 0.45            # max normalized wrist distance to link a hand to a pose
   max_inference_side: 640              # downscale frames above this size before inference
+  max_inference_fps: 30                # cap of detections per second (frees CPU for the game loop)
   camera:
     default_index: 0
     request_width: 1920
@@ -324,7 +325,7 @@ difficulties:
         initial_delay_range: [60.0, 80.0]
         interval_range: [45.0, 60.0]
         expiration_range: [14.0, 18.0]
-      gestures: {knife_min_speed: 150.0, knife_thickness: 40.0, grab_radius: 90.0}
+      gestures: {knife_min_speed: 40.0, knife_thickness: 40.0, grab_radius: 90.0}
   easy:                       # needs little concentration: big, slowish, high fruits, rare hazards
     label: "Easy"
     overrides:
@@ -360,7 +361,7 @@ difficulties:
         initial_delay_range: [40.0, 60.0]
         interval_range: [30.0, 45.0]
         expiration_range: [10.0, 14.0]
-      gestures: {knife_min_speed: 250.0, knife_thickness: 30.0, grab_radius: 65.0}
+      gestures: {knife_min_speed: 70.0, knife_thickness: 30.0, grab_radius: 65.0}
   normal:                     # the base values above: a real challenge
     label: "Normal"
     overrides: {}
@@ -399,4 +400,4 @@ difficulties:
         initial_delay_range: [12.0, 20.0]
         interval_range: [12.0, 20.0]
         expiration_range: [4.0, 6.0]
-      gestures: {knife_min_speed: 500.0, knife_thickness: 16.0, grab_radius: 32.0}
+      gestures: {knife_min_speed: 220.0, knife_thickness: 16.0, grab_radius: 32.0}

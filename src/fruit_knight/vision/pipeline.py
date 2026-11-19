@@ -34,6 +34,7 @@ class VisionPipeline:
         self._mode = TrackingMode.POSE_HANDS
         self._players = 1
         self._tracking_wanted = False
+        self.processing = True  # False pauses frame processing without unloading the models
         self._tracker_dirty = False
         self._tracker: BaseTracker | None = None
         self._result: TrackingResult | None = None
@@ -182,15 +183,20 @@ class VisionPipeline:
         """Worker loop: fetch frame, crop, track, publish."""
         last_counter = 0
         last_ts = 0
+        min_interval = 1.0 / self._cfg.max_inference_fps  # pacing keeps the CPU (and the game loop) free
         while not self._stop.is_set():
             if self._tracker_dirty:
                 self._tracker_dirty = False
                 self._build_tracker()
+            if not self.processing:
+                time.sleep(0.05)
+                continue
             frame, counter = self.camera.read_latest()
             if frame is None or counter == last_counter:
                 time.sleep(0.004)
                 continue
             last_counter = counter
+            started = time.perf_counter()
             rgb = cv2.cvtColor(self._roi.crop(cv2.flip(frame, 1)), cv2.COLOR_BGR2RGB)
             rgb = np.ascontiguousarray(rgb)
             hands, poses = [], []
@@ -202,3 +208,6 @@ class VisionPipeline:
                     log.exception("Inference failed")
             with self._lock:
                 self._result = TrackingResult(rgb, hands, poses, time.monotonic())
+            spare = min_interval - (time.perf_counter() - started)
+            if spare > 0:
+                time.sleep(spare)

@@ -212,6 +212,7 @@ class TrackingConfig:
     min_tracking_confidence: float = 0.5
     assign_max_distance: float = 0.45
     max_inference_side: int = 640
+    max_inference_fps: float = 30.0
     camera: CameraConfig = field(default_factory=CameraConfig)
 
 

@@ -366,18 +366,23 @@
 
 <div class="viewcode-block" id="frame_to_surface">
 <a class="viewcode-back" href="../../../_apidoc/fruit_knight.rendering.camera_view.html#fruit_knight.rendering.camera_view.frame_to_surface">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">frame_to_surface</span><span class="p">(</span><span class="n">frame_rgb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frame_to_surface</span><span class="p">(</span><span class="n">frame_rgb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Scale an RGB frame to a size and wrap it in a surface.</span>
 
 <span class="sd">    :param frame_rgb: ``uint8`` image of shape ``(H, W, 3)``.</span>
 <span class="sd">    :type frame_rgb: numpy.ndarray</span>
 <span class="sd">    :param size: target width and height in pixels.</span>
 <span class="sd">    :type size: tuple[int, int]</span>
+<span class="sd">    :param dim: darkening in ``[0, 1)`` baked into the pixels (cheaper than a per-frame overlay).</span>
+<span class="sd">    :type dim: float</span>
 <span class="sd">    :return: scaled surface without alpha.</span>
 <span class="sd">    :rtype: pygame.Surface</span>
 <span class="sd">    """</span>
     <span class="n">scaled</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame_rgb</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_LINEAR</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">scaled</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">size</span><span class="p">,</span> <span class="s2">"RGB"</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></div>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">convertScaleAbs</span><span class="p">(</span><span class="n">scaled</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="c1"># ``scaled`` is contiguous, so the surface can read it without an extra copy.</span>
+    <span class="k">return</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">scaled</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="s2">"RGB"</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></div>
 
 
 

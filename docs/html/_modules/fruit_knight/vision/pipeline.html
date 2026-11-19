@@ -393,6 +393,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">TrackingMode</span><span class="o">.</span><span class="n">POSE_HANDS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_players</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_wanted</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># False pauses frame processing without unloading the models</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracker_dirty</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracker</span><span class="p">:</span> <span class="n">BaseTracker</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">:</span> <span class="n">TrackingResult</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -565,15 +566,20 @@
 <span class="w">        </span><span class="sd">"""Worker loop: fetch frame, crop, track, publish."""</span>
         <span class="n">last_counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">last_ts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">min_interval</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="o">.</span><span class="n">max_inference_fps</span>  <span class="c1"># pacing keeps the CPU (and the game loop) free</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracker_dirty</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_tracker_dirty</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_build_tracker</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+                <span class="k">continue</span>
             <span class="n">frame</span><span class="p">,</span> <span class="n">counter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">read_latest</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">counter</span> <span class="o">==</span> <span class="n">last_counter</span><span class="p">:</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.004</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">last_counter</span> <span class="o">=</span> <span class="n">counter</span>
+            <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
             <span class="n">rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_roi</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
             <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span>
             <span class="n">hands</span><span class="p">,</span> <span class="n">poses</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -584,7 +590,10 @@
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># noqa: BLE001 - keep streaming video if one inference fails</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">"Inference failed"</span><span class="p">)</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">TrackingResult</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">hands</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">())</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">TrackingResult</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">hands</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">())</span>
+            <span class="n">spare</span> <span class="o">=</span> <span class="n">min_interval</span> <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">spare</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">spare</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

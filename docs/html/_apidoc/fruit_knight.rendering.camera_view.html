@@ -366,13 +366,14 @@
 <p>Conversion of camera frames into pygame surfaces.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="fruit_knight.rendering.camera_view.frame_to_surface">
-<span class="sig-prename descclassname"><span class="pre">fruit_knight.rendering.camera_view.</span></span><span class="sig-name descname"><span class="pre">frame_to_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/rendering/camera_view.html#frame_to_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.rendering.camera_view.frame_to_surface" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">fruit_knight.rendering.camera_view.</span></span><span class="sig-name descname"><span class="pre">frame_to_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/rendering/camera_view.html#frame_to_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.rendering.camera_view.frame_to_surface" title="Link to this definition">¶</a></dt>
 <dd><p>Scale an RGB frame to a size and wrap it in a surface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>frame_rgb</strong> (<em>numpy.ndarray</em>) – <code class="docutils literal notranslate"><span class="pre">uint8</span></code> image of shape <code class="docutils literal notranslate"><span class="pre">(H,</span> <span class="pre">W,</span> <span class="pre">3)</span></code>.</p></li>
 <li><p><strong>size</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – target width and height in pixels.</p></li>
+<li><p><strong>dim</strong> (<em>float</em>) – darkening in <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code> baked into the pixels (cheaper than a per-frame overlay).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

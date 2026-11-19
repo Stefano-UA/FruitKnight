@@ -103,7 +103,7 @@ class GameScreen(Screen):
                 frame_size = (result.frame.shape[1], result.frame.shape[0])
                 self.samples = self.hand_tracker.update(result.hands, frame_size, result.timestamp)
                 self.poses = result.poses
-                self.background = frame_to_surface(result.frame, self.size)
+                self.background = frame_to_surface(result.frame, self.size, self.app.cfg.ui.camera_dim_alpha / 255.0)
             return
         # No camera: the mouse drives Player 1 so the game stays playable.
         self.background = None
@@ -165,10 +165,7 @@ class GameScreen(Screen):
         :type surface: pygame.Surface
         """
         if self.background is not None:
-            surface.blit(self.background, (0, 0))
-            dim = pygame.Surface(self.size)
-            dim.set_alpha(self.app.cfg.ui.camera_dim_alpha)
-            surface.blit(dim, (0, 0))
+            surface.blit(self.background, (0, 0))  # already dimmed when converted
         else:
             self.draw_background(surface)
         draw_poses(surface, self.poses, self.colors, self.app.fonts)  # type: ignore[arg-type]
