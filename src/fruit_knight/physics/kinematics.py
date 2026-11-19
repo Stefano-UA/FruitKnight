@@ -65,6 +65,9 @@ def sample_launch(
 ) -> tuple[float, float]:
     """Sample a random launch whose trajectory stays horizontally on screen.
 
+    Launches starting inside the edge zones of ``profile`` move towards the opposite side, so the
+    player never faces an object that leaves through the border it appeared next to.
+
     :param rng: random generator.
     :type rng: random.Random
     :param profile: random height and angle ranges.
@@ -88,9 +91,19 @@ def sample_launch(
     height = rand_range(rng, (profile.min_height_ratio, profile.max_height_ratio)) * screen_height
     angle = math.radians(rand_range(rng, (profile.min_angle_deg, profile.max_angle_deg)))
     vx, vy = compute_launch_velocity(height, g_eff, angle)
-    vx *= rng.choice((-1.0, 1.0))
-    landing_x = spawn_x + vx * flight_time(vy, g_eff)
-    # Mirror the horizontal direction when the arc would leave the screen.
-    if not margin <= landing_x <= screen_width - margin:
-        vx = -vx
+    zone = profile.edge_zone_ratio * screen_width
+    if spawn_x < zone:
+        vx = abs(vx)  # spawned near the left edge: always head towards the opposite side
+    elif spawn_x > screen_width - zone:
+        vx = -abs(vx)
+    else:
+        vx *= rng.choice((-1.0, 1.0))
+    # Never let the arc reach the side borders: cap the drift so it lands inside the margins.
+    t = flight_time(vy, g_eff)
+    landing_x = spawn_x + vx * t
+    low, high = margin, screen_width - margin
+    if landing_x < low:
+        vx = (low - spawn_x) / t
+    elif landing_x > high:
+        vx = (high - spawn_x) / t
     return vx, -vy

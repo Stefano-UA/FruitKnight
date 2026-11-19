@@ -429,6 +429,8 @@
 <dt class="sig sig-object py" id="fruit_knight.physics.kinematics.sample_launch">
 <span class="sig-prename descclassname"><span class="pre">fruit_knight.physics.kinematics.</span></span><span class="sig-name descname"><span class="pre">sample_launch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_gravity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawn_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/physics/kinematics.html#sample_launch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.physics.kinematics.sample_launch" title="Link to this definition">¶</a></dt>
 <dd><p>Sample a random launch whose trajectory stays horizontally on screen.</p>
+<p>Launches starting inside the edge zones of <code class="docutils literal notranslate"><span class="pre">profile</span></code> move towards the opposite side, so the
+player never faces an object that leaves through the border it appeared next to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

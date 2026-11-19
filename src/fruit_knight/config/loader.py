@@ -122,6 +122,8 @@ def validate(cfg: GameConfig) -> None:
     for name, launch in launches.items():
         _check_range(f"{name}.height_ratio", (launch.min_height_ratio, launch.max_height_ratio))
         _check_range(f"{name}.angle_deg", (launch.min_angle_deg, launch.max_angle_deg))
+        if not 0.0 <= launch.edge_zone_ratio <= 0.5:
+            raise ConfigError(f"'{name}.edge_zone_ratio' must be in [0, 0.5]")
         if launch.max_height_ratio > 1.5 or launch.max_angle_deg >= 80:
             raise ConfigError(f"'{name}' launches are out of sensible bounds")
     for name, rng in (

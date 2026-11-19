@@ -115,6 +115,10 @@ The setup screen offers **Very Easy, Easy, Normal and Hard**. They are defined i
 overrides (any key of the file: gravity, spawn curve, fruit/bomb launch heights and angles, limiter speed and lifetime,
 holder hold times, thrower expiry, hit radii, `knife_min_speed`...). Edit those blocks to tune a level, or add new ones.
 
+Easier levels have bigger, slower fruits that fly **higher**, bombs that fly **lower**, rarer hazards and more forgiving hit radii;
+harder levels invert this (small, fast, low fruits; high bombs; dense hazards). Objects spawned within `edge_zone_ratio` of a side
+edge always head towards the opposite side, so nothing leaves through the border it appeared next to.
+
 ## Configuration
 
 Everything tunable lives in [`config/settings.yaml`](config/settings.yaml) (resolution, FPS, countdown, gravity, spawn curve, per-entity

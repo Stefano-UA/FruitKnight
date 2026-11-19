@@ -104,7 +104,11 @@ def test_game_window_follows_roi_aspect_ratio() -> None:
 
     from fruit_knight.vision.roi import RoiRect
 
-    app = App(load_config(), use_camera=True)
+    import dataclasses
+
+    base = load_config()
+    cfg = dataclasses.replace(base, window=dataclasses.replace(base.window, fullscreen=False))  # fullscreen never resizes
+    app = App(cfg, use_camera=True)
     try:
         app.pipeline.camera._frame, app.pipeline.camera._counter = np.zeros((480, 640, 3), np.uint8), 1
         app.setup.roi = RoiRect(0.0, 0.0, 0.5, 1.0)  # 320x480 px: portrait, aspect 2:3

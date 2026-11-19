@@ -120,6 +120,7 @@ def test_ball_rolls_on_top_of_limiter_and_bounces_underneath() -> None:
     fruit = factory.fruit(800, 1, "apple")
     fruit.body.position = (400.0, 200.0)
     fruit.body.velocity = (0.0, 0.0)
+    fruit.body.angular_velocity = 0.0  # random spin would decide the rolling side
     run(world, 1.0)
     # Sloping down to the right (alpha > 0): the apple lands on top and rolls rightwards.
     assert fruit.position[1] < 460 and fruit.velocity[0] > 10
@@ -164,3 +165,33 @@ def test_thrower_reaches_target_zone_via_collision_handler() -> None:
     assert zone in thrower.zone_contacts and not thrower.delivered
     thrower.release((0.0, 0.0), 1)
     assert thrower.delivered
+
+
+def test_launches_near_an_edge_head_to_the_opposite_side() -> None:
+    """Objects spawned in an edge zone never drift towards that same edge, and always stay on screen."""
+    w = SIZE[0]
+    world, factory = make_world()
+    zone = CFG.fruits.launch.edge_zone_ratio * w
+    for x, sign in ((60.0, 1), (zone - 5, 1), (w - 60.0, -1), (w - zone + 5, -1)):
+        for _ in range(60):
+            fruit = factory.fruit(x, 1, "apple")
+            vx, vy = fruit.velocity
+            assert vx * sign >= 0
+            landing = x + vx * (2 * -vy / fruit.g_eff)
+            assert 0 < landing < w
+            fruit.remove()
+
+
+def test_difficulty_heights_are_inverted_for_fruits_and_bombs() -> None:
+    """Easier levels throw fruits higher and bombs lower; harder levels do the opposite."""
+    from fruit_knight.config import apply_difficulty
+
+    levels = [apply_difficulty(CFG, n) for n in ("very_easy", "easy", "normal", "hard")]
+    fruit_min = [c.fruits.launch.min_height_ratio for c in levels]
+    bomb_min = [c.bomb.launch.min_height_ratio for c in levels]
+    assert fruit_min == sorted(fruit_min, reverse=True) and len(set(fruit_min)) == 4
+    assert bomb_min == sorted(bomb_min) and len(set(bomb_min)) == 4
+    gravity = [c.physics.gravity for c in levels]
+    assert gravity == sorted(gravity) and len(set(gravity)) == 4
+    radius = [c.fruits.subtypes["apple"].radius for c in levels]
+    assert radius == sorted(radius, reverse=True)

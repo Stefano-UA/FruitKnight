@@ -53,6 +53,7 @@ class LaunchProfile:
     max_height_ratio: float = 0.88
     min_angle_deg: float = 2.0
     max_angle_deg: float = 24.0
+    edge_zone_ratio: float = 0.3  # width fraction near each edge where launches head to the opposite side
 
 
 @dataclass
