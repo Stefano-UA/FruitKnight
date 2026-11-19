@@ -92,8 +92,6 @@ class App:
         self.current.on_exit()
         if name in ("menu", "setup"):
             self.pipeline.stop_tracking()  # models stay loaded only between the camera screen and the match
-        # Results and other screens do not need detections: stop inferring to save CPU.
-        self.pipeline.processing = name in ("camera", "game")
         self.set_window_size(self.game_size if name == "game" else self.menu_size)
         self.current = self.screens[name]
         self.current.on_enter(**kwargs)
