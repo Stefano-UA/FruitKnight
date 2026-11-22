@@ -29,6 +29,18 @@ MAX_DESKTOP_WIDTH_RATIO, MAX_DESKTOP_HEIGHT_RATIO = 0.96, 0.88
 MIN_GAME_WIDTH = 480
 
 
+def set_windows_dpi_aware() -> None:
+    """Declare the process DPI-aware so Windows does not bitmap-scale the window (blurry and slower)."""
+    if sys.platform.startswith("win"):
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)  # type: ignore[attr-defined]
+        except (AttributeError, OSError):
+            try:
+                ctypes.windll.user32.SetProcessDPIAware()  # type: ignore[attr-defined]
+            except (AttributeError, OSError):
+                log.debug("Could not set DPI awareness")
+
+
 def set_windows_app_id() -> None:
     """Give the process its own Windows taskbar identity so the window icon replaces Python's."""
     if sys.platform.startswith("win"):
@@ -49,7 +61,8 @@ class App:
         :param use_camera: disable to force mouse mode even when a camera exists.
         :type use_camera: bool
         """
-        set_windows_app_id()  # must precede window creation for the taskbar icon
+        set_windows_dpi_aware()  # both calls must precede window creation
+        set_windows_app_id()  # for the taskbar icon
         pygame.init()
         self.cfg = cfg
         self.use_camera = use_camera

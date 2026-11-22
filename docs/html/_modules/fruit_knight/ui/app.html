@@ -386,6 +386,21 @@
 <span class="n">MIN_GAME_WIDTH</span> <span class="o">=</span> <span class="mi">480</span>
 
 
+<div class="viewcode-block" id="set_windows_dpi_aware">
+<a class="viewcode-back" href="../../../_apidoc/fruit_knight.ui.app.html#fruit_knight.ui.app.set_windows_dpi_aware">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_windows_dpi_aware</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Declare the process DPI-aware so Windows does not bitmap-scale the window (blurry and slower)."""</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"win"</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">shcore</span><span class="o">.</span><span class="n">SetProcessDpiAwareness</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">user32</span><span class="o">.</span><span class="n">SetProcessDPIAware</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Could not set DPI awareness"</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="set_windows_app_id">
 <a class="viewcode-back" href="../../../_apidoc/fruit_knight.ui.app.html#fruit_knight.ui.app.set_windows_app_id">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_windows_app_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -411,7 +426,8 @@
 <span class="sd">        :param use_camera: disable to force mouse mode even when a camera exists.</span>
 <span class="sd">        :type use_camera: bool</span>
 <span class="sd">        """</span>
-        <span class="n">set_windows_app_id</span><span class="p">()</span>  <span class="c1"># must precede window creation for the taskbar icon</span>
+        <span class="n">set_windows_dpi_aware</span><span class="p">()</span>  <span class="c1"># both calls must precede window creation</span>
+        <span class="n">set_windows_app_id</span><span class="p">()</span>  <span class="c1"># for the taskbar icon</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_camera</span> <span class="o">=</span> <span class="n">use_camera</span>
@@ -456,8 +472,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">on_exit</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"menu"</span><span class="p">,</span> <span class="s2">"setup"</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">stop_tracking</span><span class="p">()</span>  <span class="c1"># models stay loaded only between the camera screen and the match</span>
-        <span class="c1"># Results and other screens do not need detections: stop inferring to save CPU.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">processing</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"camera"</span><span class="p">,</span> <span class="s2">"game"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_window_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_size</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"game"</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">on_enter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>

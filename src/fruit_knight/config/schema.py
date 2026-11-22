@@ -196,6 +196,7 @@ class CameraConfig:
     request_width: int = 1280
     request_height: int = 720
     request_fps: int = 30
+    fourcc: str = "MJPG"  # compressed stream; raw YUY2 at 720p/1080p is very slow over USB
     index_options: list[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])
 
 

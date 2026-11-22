@@ -210,6 +210,7 @@ tracking:
     request_width: 1920
     request_height: 1080
     request_fps: 60
+    fourcc: MJPG                       # compressed camera stream (much faster than raw at HD)
     index_options: [0, 1, 2, 3, 4]
 
 # ----------------------------------------------------------------------------

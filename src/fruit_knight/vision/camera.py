@@ -56,6 +56,9 @@ class CameraCapture:
         if not cap.isOpened():
             cap.release()
             return
+        if len(self._cfg.fourcc) == 4:
+            # Must be requested before the size: uncompressed HD streams fall to a few fps on USB webcams.
+            cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*self._cfg.fourcc))
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, self._cfg.request_width)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self._cfg.request_height)
         cap.set(cv2.CAP_PROP_FPS, self._cfg.request_fps)
