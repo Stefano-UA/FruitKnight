@@ -7,7 +7,7 @@
 window:
   width: 1920
   height: 1080
-  fps: 60                      # target frames per second
+  fps: 30                      # target frames per second
   title: "Fruit Knight"
   fullscreen: true
 
@@ -181,7 +181,7 @@ gestures:
   min_curled_fingers: 3                # curled fingers required for CLOSED_FIST
   knife_finger_spread_max_ratio: 0.42  # adjacent tip distance / palm size
   throw_inertia_multiplier: 1.05
-  debounce_frames: 6                   # frames a posture must persist before switching
+  debounce_frames: 3                   # frames a posture must persist before switching
   velocity_window_s: 0.5               # history window for velocity estimation
   velocity_smoothing: 0.5              # EMA factor in [0, 1] (1 = no smoothing)
   knife_min_speed: 120.0               # px/s the hand must move to cut (a still knife hand never cuts)
@@ -209,7 +209,7 @@ tracking:
     default_index: 0
     request_width: 1920
     request_height: 1080
-    request_fps: 60
+    request_fps: 30
     fourcc: MJPG                       # compressed camera stream (much faster than raw at HD)
     index_options: [0, 1, 2, 3, 4]
 
