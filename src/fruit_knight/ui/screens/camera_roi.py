@@ -41,7 +41,6 @@ class CameraROIScreen(Screen):
         self._tracker_size = (0, 0)
         self.colors = [tuple(c) for c in cfg.players.colors]
         if self.app.use_camera:
-            # Load the selected model now so detections are visible while framing the play area.
             self.app.pipeline.set_roi(self.app.setup.roi)
             self.app.pipeline.ensure_tracking(self.app.setup.tracking_mode, self.app.setup.players)
         options = [str(i) for i in cfg.tracking.camera.index_options]
@@ -120,11 +119,15 @@ class CameraROIScreen(Screen):
         result = self.app.pipeline.latest()
         if result is not None and result.frame is not None and result.timestamp != self._last_stamp:
             self._last_stamp = result.timestamp
-            size = self._saved_roi_rect().size  # landmarks are drawn inside the saved play area
+            size = self._saved_roi_rect().size
             if self.hand_tracker is None or self._tracker_size != size:
                 self.hand_tracker = HandTracker(self.app.cfg.gestures, size)
                 self._tracker_size = size
-            self.samples = self.hand_tracker.update(result.hands, (result.frame.shape[1], result.frame.shape[0]), result.timestamp)
+            self.samples = self.hand_tracker.update(
+                result.hands,
+                (result.frame.shape[1], result.frame.shape[0]),
+                result.timestamp,
+            )
             self.poses = result.poses
 
     # ----------------------------------------------------------------- draw
@@ -138,7 +141,7 @@ class CameraROIScreen(Screen):
         return pygame.Rect(v.x + roi.x * v.w, v.y + roi.y * v.h, max(1, roi.w * v.w), max(1, roi.h * v.h))
 
     def _draw_detections(self, surface: pygame.Surface) -> None:
-        """Draw the live skeletons and hands recognised inside the play area.
+        """Draw live skeletons and hands inside the selected play area.
 
         :param surface: window surface.
         :type surface: pygame.Surface

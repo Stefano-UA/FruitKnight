@@ -68,6 +68,10 @@ class GameScreen(Screen):
         self._last_stamp = -1.0
         self.clock_now = time.monotonic()
 
+    def on_exit(self) -> None:
+        """Stop tracking when leaving the match."""
+        self.app.pipeline.stop_tracking()
+
     # ----------------------------------------------------------------- events
     def handle_event(self, event: pygame.event.Event) -> None:
         """Handle pause, resume and quit keys.
@@ -103,7 +107,7 @@ class GameScreen(Screen):
                 frame_size = (result.frame.shape[1], result.frame.shape[0])
                 self.samples = self.hand_tracker.update(result.hands, frame_size, result.timestamp)
                 self.poses = result.poses
-                self.background = frame_to_surface(result.frame, self.size, self.app.cfg.ui.camera_dim_alpha / 255.0)
+                self.background = frame_to_surface(result.frame, self.size)
             return
         # No camera: the mouse drives Player 1 so the game stays playable.
         self.background = None
@@ -165,7 +169,10 @@ class GameScreen(Screen):
         :type surface: pygame.Surface
         """
         if self.background is not None:
-            surface.blit(self.background, (0, 0))  # already dimmed when converted
+            surface.blit(self.background, (0, 0))
+            dim = pygame.Surface(self.size)
+            dim.set_alpha(self.app.cfg.ui.camera_dim_alpha)
+            surface.blit(dim, (0, 0))
         else:
             self.draw_background(surface)
         draw_poses(surface, self.poses, self.colors, self.app.fonts)  # type: ignore[arg-type]

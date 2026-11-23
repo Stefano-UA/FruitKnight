@@ -149,8 +149,6 @@ def validate(cfg: GameConfig) -> None:
         raise ConfigError("gestures.debounce_frames >= 1 and velocity_smoothing in (0, 1]")
     if cfg.defaults.mode not in {"1p_endurance", "np_endurance", "np_competition", "2p_football"}:
         raise ConfigError(f"unknown defaults.mode '{cfg.defaults.mode}'")
-    if cfg.tracking.max_inference_fps <= 0:
-        raise ConfigError("tracking.max_inference_fps must be > 0")
     if cfg.defaults.difficulty not in cfg.difficulties:
         raise ConfigError(f"defaults.difficulty '{cfg.defaults.difficulty}' is not listed in 'difficulties'")
     if cfg.tracking.default_mode not in {"pose_hands", "hands_only"}:

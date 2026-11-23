@@ -55,10 +55,10 @@ official storage into `assets/models/` on first use.
    holders and throwers, and the tracking mode (*Full Pose + Hands* with coloured mannequins, or
    *Lightweight Hands-Only* with screen zones).
 2. **Camera & play area**: camera index selector with a mirrored live preview; drag a rectangle with the
-   mouse to crop the active play area (**Reset to Full Frame** restores the whole image). The selected tracking model is loaded here
-   and the detected skeletons/hands are drawn live. The match window then takes the aspect ratio of the selected area.
-3. **Countdown (5 s)** over the live feed with each player's coloured skeleton/hands visible, then the match.
-   **SPACE** pauses (physics, timers and spawners freeze); **SPACE** again runs the same 5-second countdown
+   mouse to crop the active play area (**Reset to Full Frame** restores the whole image). The selected tracking model is loaded here,
+   and detected skeletons/hands are drawn live. The match window takes the aspect ratio of the selected area.
+3. **Countdown (3 s)** over the live feed with each player's coloured skeleton/hands visible, then the match.
+   **SPACE** pauses (physics, timers and spawners freeze); **SPACE** again runs the same 3-second countdown
    before resuming. **ESC** from the pause screen returns to the menu.
 4. **Results**: standings and per-player breakdown, **Play Again** or **Return to Menu**.
 
