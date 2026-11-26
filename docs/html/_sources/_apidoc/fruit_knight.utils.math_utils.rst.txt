@@ -1,0 +1,7 @@
+fruit\_knight.utils.math\_utils module
+======================================
+
+.. automodule:: fruit_knight.utils.math_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

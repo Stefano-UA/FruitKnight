@@ -1,0 +1,7 @@
+fruit\_knight.utils.timers module
+=================================
+
+.. automodule:: fruit_knight.utils.timers
+   :members:
+   :show-inheritance:
+   :undoc-members:

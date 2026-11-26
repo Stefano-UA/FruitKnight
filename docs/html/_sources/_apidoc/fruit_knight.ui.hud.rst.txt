@@ -1,0 +1,7 @@
+fruit\_knight.ui.hud module
+===========================
+
+.. automodule:: fruit_knight.ui.hud
+   :members:
+   :show-inheritance:
+   :undoc-members:

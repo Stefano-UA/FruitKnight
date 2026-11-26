@@ -1,0 +1,7 @@
+fruit\_knight.vision.hands module
+=================================
+
+.. automodule:: fruit_knight.vision.hands
+   :members:
+   :show-inheritance:
+   :undoc-members:

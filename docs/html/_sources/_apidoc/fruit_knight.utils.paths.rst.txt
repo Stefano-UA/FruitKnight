@@ -1,0 +1,7 @@
+fruit\_knight.utils.paths module
+================================
+
+.. automodule:: fruit_knight.utils.paths
+   :members:
+   :show-inheritance:
+   :undoc-members:

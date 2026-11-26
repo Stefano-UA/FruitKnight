@@ -1,0 +1,26 @@
+fruit\_knight.ui package
+========================
+
+.. automodule:: fruit_knight.ui
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.ui.screens
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.ui.app
+   fruit_knight.ui.hud
+   fruit_knight.ui.overlays
+   fruit_knight.ui.theme

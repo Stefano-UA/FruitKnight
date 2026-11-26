@@ -1,0 +1,23 @@
+fruit\_knight.modes package
+===========================
+
+.. automodule:: fruit_knight.modes
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.modes.base
+   fruit_knight.modes.competition
+   fruit_knight.modes.endurance
+   fruit_knight.modes.events
+   fruit_knight.modes.football
+   fruit_knight.modes.interaction
+   fruit_knight.modes.players
+   fruit_knight.modes.setup
+   fruit_knight.modes.spawner

@@ -1,0 +1,18 @@
+fruit\_knight.utils package
+===========================
+
+.. automodule:: fruit_knight.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.utils.constants
+   fruit_knight.utils.math_utils
+   fruit_knight.utils.paths
+   fruit_knight.utils.timers

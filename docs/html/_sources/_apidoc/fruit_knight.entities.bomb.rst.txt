@@ -1,0 +1,7 @@
+fruit\_knight.entities.bomb module
+==================================
+
+.. automodule:: fruit_knight.entities.bomb
+   :members:
+   :show-inheritance:
+   :undoc-members:

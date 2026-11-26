@@ -1,0 +1,7 @@
+fruit\_knight.physics.coords module
+===================================
+
+.. automodule:: fruit_knight.physics.coords
+   :members:
+   :show-inheritance:
+   :undoc-members:

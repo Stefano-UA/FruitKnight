@@ -1,0 +1,7 @@
+fruit\_knight.modes.football module
+===================================
+
+.. automodule:: fruit_knight.modes.football
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+fruit\_knight.rendering.effects module
+======================================
+
+.. automodule:: fruit_knight.rendering.effects
+   :members:
+   :show-inheritance:
+   :undoc-members:

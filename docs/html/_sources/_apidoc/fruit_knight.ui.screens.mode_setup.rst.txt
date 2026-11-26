@@ -1,0 +1,7 @@
+fruit\_knight.ui.screens.mode\_setup module
+===========================================
+
+.. automodule:: fruit_knight.ui.screens.mode_setup
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+fruit\_knight.ui.screens.base module
+====================================
+
+.. automodule:: fruit_knight.ui.screens.base
+   :members:
+   :show-inheritance:
+   :undoc-members:

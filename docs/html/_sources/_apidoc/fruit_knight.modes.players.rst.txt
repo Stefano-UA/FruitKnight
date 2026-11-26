@@ -1,0 +1,7 @@
+fruit\_knight.modes.players module
+==================================
+
+.. automodule:: fruit_knight.modes.players
+   :members:
+   :show-inheritance:
+   :undoc-members:

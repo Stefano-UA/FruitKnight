@@ -1,0 +1,7 @@
+fruit\_knight.rendering.icon module
+===================================
+
+.. automodule:: fruit_knight.rendering.icon
+   :members:
+   :show-inheritance:
+   :undoc-members:

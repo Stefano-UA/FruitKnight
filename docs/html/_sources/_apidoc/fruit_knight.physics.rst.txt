@@ -1,0 +1,17 @@
+fruit\_knight.physics package
+=============================
+
+.. automodule:: fruit_knight.physics
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.physics.coords
+   fruit_knight.physics.kinematics
+   fruit_knight.physics.world

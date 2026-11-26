@@ -1,0 +1,7 @@
+fruit\_knight.ui.screens.camera\_roi module
+===========================================
+
+.. automodule:: fruit_knight.ui.screens.camera_roi
+   :members:
+   :show-inheritance:
+   :undoc-members:

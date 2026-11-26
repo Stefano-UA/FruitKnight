@@ -1,0 +1,7 @@
+fruit\_knight.vision.motion module
+==================================
+
+.. automodule:: fruit_knight.vision.motion
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,880 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="fruit_knight.config.loader module" href="fruit_knight.config.loader.html"><link rel="prev" title="fruit_knight package" href="fruit_knight.html">
+
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>fruit_knight.config package - Fruit Knight</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=fe3f360e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-background-primary: #131416;
+  --color-background-secondary: #1a1c1e;
+  --color-background-hover: #1e2124;
+  --color-background-border: #303335;
+  --color-foreground-primary: #cfd0d0;
+  --color-foreground-secondary: #9ca0a5;
+  --color-brand-primary: #ffab40;
+  --color-brand-content: #ffab40;
+  --color-code-background: #1a1c1e;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style>
+
+
+<script>
+  try { localStorage.setItem("theme", "dark"); } catch (e) {}
+  document.documentElement.dataset.theme = "dark";
+</script>
+</head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Fruit Knight</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Fruit Knight</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="modules.html">fruit_knight</a><input aria-label="Toggle navigation of fruit_knight" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="fruit_knight.html">fruit_knight package</a><input aria-label="Toggle navigation of fruit_knight package" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#">fruit_knight.config package</a><input aria-label="Toggle navigation of fruit_knight.config package" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.config.loader.html">fruit_knight.config.loader module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.config.schema.html">fruit_knight.config.schema module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.entities.html">fruit_knight.entities package</a><input aria-label="Toggle navigation of fruit_knight.entities package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.base.html">fruit_knight.entities.base module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.bomb.html">fruit_knight.entities.bomb module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.factory.html">fruit_knight.entities.factory module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.fruit.html">fruit_knight.entities.fruit module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.holder.html">fruit_knight.entities.holder module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.limiter.html">fruit_knight.entities.limiter module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.target_zone.html">fruit_knight.entities.target_zone module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.entities.thrower.html">fruit_knight.entities.thrower module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.modes.html">fruit_knight.modes package</a><input aria-label="Toggle navigation of fruit_knight.modes package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.base.html">fruit_knight.modes.base module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.competition.html">fruit_knight.modes.competition module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.endurance.html">fruit_knight.modes.endurance module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.events.html">fruit_knight.modes.events module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.football.html">fruit_knight.modes.football module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.interaction.html">fruit_knight.modes.interaction module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.players.html">fruit_knight.modes.players module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.setup.html">fruit_knight.modes.setup module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.modes.spawner.html">fruit_knight.modes.spawner module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.physics.html">fruit_knight.physics package</a><input aria-label="Toggle navigation of fruit_knight.physics package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.physics.coords.html">fruit_knight.physics.coords module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.physics.kinematics.html">fruit_knight.physics.kinematics module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.physics.world.html">fruit_knight.physics.world module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.rendering.html">fruit_knight.rendering package</a><input aria-label="Toggle navigation of fruit_knight.rendering package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.assets.html">fruit_knight.rendering.assets module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.audio.html">fruit_knight.rendering.audio module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.camera_view.html">fruit_knight.rendering.camera_view module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.draw_utils.html">fruit_knight.rendering.draw_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.effects.html">fruit_knight.rendering.effects module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.entity_renderer.html">fruit_knight.rendering.entity_renderer module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.fonts.html">fruit_knight.rendering.fonts module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.icon.html">fruit_knight.rendering.icon module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.overlay.html">fruit_knight.rendering.overlay module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.procedural.html">fruit_knight.rendering.procedural module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.rendering.sprites.html">fruit_knight.rendering.sprites module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.ui.html">fruit_knight.ui package</a><input aria-label="Toggle navigation of fruit_knight.ui package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="fruit_knight.ui.screens.html">fruit_knight.ui.screens package</a><input aria-label="Toggle navigation of fruit_knight.ui.screens package" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.base.html">fruit_knight.ui.screens.base module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.camera_roi.html">fruit_knight.ui.screens.camera_roi module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.game_over.html">fruit_knight.ui.screens.game_over module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.game_screen.html">fruit_knight.ui.screens.game_screen module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.main_menu.html">fruit_knight.ui.screens.main_menu module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="fruit_knight.ui.screens.mode_setup.html">fruit_knight.ui.screens.mode_setup module</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.ui.app.html">fruit_knight.ui.app module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.ui.hud.html">fruit_knight.ui.hud module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.ui.overlays.html">fruit_knight.ui.overlays module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.ui.theme.html">fruit_knight.ui.theme module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.utils.html">fruit_knight.utils package</a><input aria-label="Toggle navigation of fruit_knight.utils package" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.utils.constants.html">fruit_knight.utils.constants module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.utils.math_utils.html">fruit_knight.utils.math_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.utils.paths.html">fruit_knight.utils.paths module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.utils.timers.html">fruit_knight.utils.timers module</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="fruit_knight.vision.html">fruit_knight.vision package</a><input aria-label="Toggle navigation of fruit_knight.vision package" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.camera.html">fruit_knight.vision.camera module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.gestures.html">fruit_knight.vision.gestures module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.hands.html">fruit_knight.vision.hands module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.models.html">fruit_knight.vision.models module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.motion.html">fruit_knight.vision.motion module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.pipeline.html">fruit_knight.vision.pipeline module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.roi.html">fruit_knight.vision.roi module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.simulator.html">fruit_knight.vision.simulator module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="fruit_knight.vision.trackers.html">fruit_knight.vision.trackers module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fruit_knight.main.html">fruit_knight.main module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/_apidoc/fruit_knight.config.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-fruit_knight.config">
+<span id="fruit-knight-config-package"></span><h1>fruit_knight.config package<a class="headerlink" href="#module-fruit_knight.config" title="Link to this heading">¶</a></h1>
+<p>Configuration loading and typed schemas.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="fruit_knight.config.ConfigError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fruit_knight.config.</span></span><span class="sig-name descname"><span class="pre">ConfigError</span></span><a class="reference internal" href="../_modules/fruit_knight/config/loader.html#ConfigError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.config.ConfigError" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Raised when <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code> is malformed or inconsistent.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fruit_knight.config.</span></span><span class="sig-name descname"><span class="pre">GameConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">countdown_seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spawning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fruits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bomb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thrower</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">football</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gestures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ui</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">difficulties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/config/schema.html#GameConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.config.GameConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Root configuration object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.window">
+<span class="sig-name descname"><span class="pre">window</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.window" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.countdown_seconds">
+<span class="sig-name descname"><span class="pre">countdown_seconds</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5.0</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.countdown_seconds" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.physics">
+<span class="sig-name descname"><span class="pre">physics</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.physics" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.spawning">
+<span class="sig-name descname"><span class="pre">spawning</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.spawning" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.fruits">
+<span class="sig-name descname"><span class="pre">fruits</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.fruits" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.bomb">
+<span class="sig-name descname"><span class="pre">bomb</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.bomb" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.limiter">
+<span class="sig-name descname"><span class="pre">limiter</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.limiter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.holder">
+<span class="sig-name descname"><span class="pre">holder</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.holder" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.thrower">
+<span class="sig-name descname"><span class="pre">thrower</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.thrower" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.scoring">
+<span class="sig-name descname"><span class="pre">scoring</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.scoring" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.football">
+<span class="sig-name descname"><span class="pre">football</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.football" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.gestures">
+<span class="sig-name descname"><span class="pre">gestures</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.gestures" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.tracking">
+<span class="sig-name descname"><span class="pre">tracking</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.tracking" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.players">
+<span class="sig-name descname"><span class="pre">players</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.players" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.ui">
+<span class="sig-name descname"><span class="pre">ui</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.ui" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.audio">
+<span class="sig-name descname"><span class="pre">audio</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.audio" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.difficulties">
+<span class="sig-name descname"><span class="pre">difficulties</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.difficulties" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fruit_knight.config.GameConfig.defaults">
+<span class="sig-name descname"><span class="pre">defaults</span></span><a class="headerlink" href="#fruit_knight.config.GameConfig.defaults" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fruit_knight.config.apply_difficulty">
+<span class="sig-prename descclassname"><span class="pre">fruit_knight.config.</span></span><span class="sig-name descname"><span class="pre">apply_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/config/loader.html#apply_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.config.apply_difficulty" title="Link to this definition">¶</a></dt>
+<dd><p>Build the configuration of a difficulty level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig" title="fruit_knight.config.schema.GameConfig"><em>fruit_knight.config.schema.GameConfig</em></a>) – base configuration (the values outside <code class="docutils literal notranslate"><span class="pre">difficulties</span></code>).</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – key inside <code class="docutils literal notranslate"><span class="pre">cfg.difficulties</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>validated copy with the level’s overrides applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig" title="fruit_knight.config.schema.GameConfig">fruit_knight.config.schema.GameConfig</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#fruit_knight.config.ConfigError" title="fruit_knight.config.ConfigError"><strong>ConfigError</strong></a> – when the level is unknown or its overrides are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fruit_knight.config.load_config">
+<span class="sig-prename descclassname"><span class="pre">fruit_knight.config.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/config/loader.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.config.load_config" title="Link to this definition">¶</a></dt>
+<dd><p>Load and validate <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em> | </em><em>pathlib.Path</em><em> | </em><em>None</em>) – YAML file location; bundled <code class="docutils literal notranslate"><span class="pre">config/settings.yaml</span></code> when omitted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>validated typed configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig" title="fruit_knight.config.schema.GameConfig">fruit_knight.config.schema.GameConfig</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#fruit_knight.config.ConfigError" title="fruit_knight.config.ConfigError"><strong>ConfigError</strong></a> – when the file is malformed or inconsistent.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fruit_knight.config.validate">
+<span class="sig-prename descclassname"><span class="pre">fruit_knight.config.</span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fruit_knight/config/loader.html#validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fruit_knight.config.validate" title="Link to this definition">¶</a></dt>
+<dd><p>Check semantic constraints of a loaded configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig" title="fruit_knight.config.schema.GameConfig"><em>fruit_knight.config.schema.GameConfig</em></a>) – configuration to verify.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#fruit_knight.config.ConfigError" title="fruit_knight.config.ConfigError"><strong>ConfigError</strong></a> – when a value is out of bounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fruit_knight.config.loader.html">fruit_knight.config.loader module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.ConfigError"><code class="docutils literal notranslate"><span class="pre">ConfigError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.apply_difficulty"><code class="docutils literal notranslate"><span class="pre">apply_difficulty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.loader.html#fruit_knight.config.loader.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fruit_knight.config.schema.html">fruit_knight.config.schema module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig"><code class="docutils literal notranslate"><span class="pre">WindowConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig.width"><code class="docutils literal notranslate"><span class="pre">WindowConfig.width</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig.height"><code class="docutils literal notranslate"><span class="pre">WindowConfig.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig.fps"><code class="docutils literal notranslate"><span class="pre">WindowConfig.fps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig.title"><code class="docutils literal notranslate"><span class="pre">WindowConfig.title</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.WindowConfig.fullscreen"><code class="docutils literal notranslate"><span class="pre">WindowConfig.fullscreen</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.gravity"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.gravity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.substeps"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.substeps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.damping"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.damping</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.spawn_offset"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.spawn_offset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.exit_margin"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.exit_margin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.max_spin"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.max_spin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PhysicsConfig.max_entity_speed"><code class="docutils literal notranslate"><span class="pre">PhysicsConfig.max_entity_speed</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig"><code class="docutils literal notranslate"><span class="pre">SpawningConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.base_spawn_interval"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.base_spawn_interval</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.spawn_acceleration_rate"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.spawn_acceleration_rate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.jitter_range"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.jitter_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.min_spawn_interval"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.min_spawn_interval</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.spawn_margin_ratio"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.spawn_margin_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.SpawningConfig.fruit_initial_delay_range"><code class="docutils literal notranslate"><span class="pre">SpawningConfig.fruit_initial_delay_range</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile"><code class="docutils literal notranslate"><span class="pre">LaunchProfile</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile.min_height_ratio"><code class="docutils literal notranslate"><span class="pre">LaunchProfile.min_height_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile.max_height_ratio"><code class="docutils literal notranslate"><span class="pre">LaunchProfile.max_height_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile.min_angle_deg"><code class="docutils literal notranslate"><span class="pre">LaunchProfile.min_angle_deg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile.max_angle_deg"><code class="docutils literal notranslate"><span class="pre">LaunchProfile.max_angle_deg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LaunchProfile.edge_zone_ratio"><code class="docutils literal notranslate"><span class="pre">LaunchProfile.edge_zone_ratio</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype"><code class="docutils literal notranslate"><span class="pre">FruitSubtype</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.weight"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.weight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.radius"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.points"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.color"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.spawn_weight"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.spawn_weight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitSubtype.sprite_path"><code class="docutils literal notranslate"><span class="pre">FruitSubtype.sprite_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitConfig"><code class="docutils literal notranslate"><span class="pre">FruitConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitConfig.elasticity"><code class="docutils literal notranslate"><span class="pre">FruitConfig.elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitConfig.friction"><code class="docutils literal notranslate"><span class="pre">FruitConfig.friction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitConfig.launch"><code class="docutils literal notranslate"><span class="pre">FruitConfig.launch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FruitConfig.subtypes"><code class="docutils literal notranslate"><span class="pre">FruitConfig.subtypes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig"><code class="docutils literal notranslate"><span class="pre">BombConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.weight"><code class="docutils literal notranslate"><span class="pre">BombConfig.weight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.radius"><code class="docutils literal notranslate"><span class="pre">BombConfig.radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.color"><code class="docutils literal notranslate"><span class="pre">BombConfig.color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.elasticity"><code class="docutils literal notranslate"><span class="pre">BombConfig.elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.friction"><code class="docutils literal notranslate"><span class="pre">BombConfig.friction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.initial_delay_range"><code class="docutils literal notranslate"><span class="pre">BombConfig.initial_delay_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.interval_range"><code class="docutils literal notranslate"><span class="pre">BombConfig.interval_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.launch"><code class="docutils literal notranslate"><span class="pre">BombConfig.launch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.BombConfig.sprite_path"><code class="docutils literal notranslate"><span class="pre">BombConfig.sprite_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig"><code class="docutils literal notranslate"><span class="pre">LimiterConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.initial_delay_range"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.initial_delay_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.interval_range"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.interval_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.min_y_ratio"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.min_y_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.max_y_ratio"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.max_y_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.max_incline_deg"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.max_incline_deg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.advance_speed"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.advance_speed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.retract_speed"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.retract_speed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.lifetime_range"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.lifetime_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.thickness"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.thickness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.tip_hit_radius"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.tip_hit_radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.elasticity"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.friction"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.friction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.sprite_path"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.LimiterConfig.beam_sprite_path"><code class="docutils literal notranslate"><span class="pre">LimiterConfig.beam_sprite_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig"><code class="docutils literal notranslate"><span class="pre">HolderConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.weight"><code class="docutils literal notranslate"><span class="pre">HolderConfig.weight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.radius"><code class="docutils literal notranslate"><span class="pre">HolderConfig.radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.initial_delay_range"><code class="docutils literal notranslate"><span class="pre">HolderConfig.initial_delay_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.interval_range"><code class="docutils literal notranslate"><span class="pre">HolderConfig.interval_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.hold_duration_range"><code class="docutils literal notranslate"><span class="pre">HolderConfig.hold_duration_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.elasticity"><code class="docutils literal notranslate"><span class="pre">HolderConfig.elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.friction"><code class="docutils literal notranslate"><span class="pre">HolderConfig.friction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.launch"><code class="docutils literal notranslate"><span class="pre">HolderConfig.launch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.active_sprite_path"><code class="docutils literal notranslate"><span class="pre">HolderConfig.active_sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.defused_sprite_path"><code class="docutils literal notranslate"><span class="pre">HolderConfig.defused_sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.active_color"><code class="docutils literal notranslate"><span class="pre">HolderConfig.active_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.HolderConfig.defused_color"><code class="docutils literal notranslate"><span class="pre">HolderConfig.defused_color</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.weight"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.weight</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.radius"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.initial_delay_range"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.initial_delay_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.interval_range"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.interval_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.expiration_range"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.expiration_range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.elasticity"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.elasticity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.friction"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.friction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.launch"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.launch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.zone_thickness"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.zone_thickness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.zone_length_ratio"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.zone_length_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.sprite_path"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.zone_sprite_path"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.zone_sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ThrowerConfig.color"><code class="docutils literal notranslate"><span class="pre">ThrowerConfig.color</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig"><code class="docutils literal notranslate"><span class="pre">ScoringConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig.holder_points"><code class="docutils literal notranslate"><span class="pre">ScoringConfig.holder_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig.thrower_points"><code class="docutils literal notranslate"><span class="pre">ScoringConfig.thrower_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig.time_multiplier"><code class="docutils literal notranslate"><span class="pre">ScoringConfig.time_multiplier</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig.penalty_points_loss"><code class="docutils literal notranslate"><span class="pre">ScoringConfig.penalty_points_loss</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.ScoringConfig.football_goal_points"><code class="docutils literal notranslate"><span class="pre">ScoringConfig.football_goal_points</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FootballConfig"><code class="docutils literal notranslate"><span class="pre">FootballConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.FootballConfig.goal_bottom_edge_ratio"><code class="docutils literal notranslate"><span class="pre">FootballConfig.goal_bottom_edge_ratio</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig"><code class="docutils literal notranslate"><span class="pre">GestureConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.extended_ratio"><code class="docutils literal notranslate"><span class="pre">GestureConfig.extended_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.fist_curl_ratio"><code class="docutils literal notranslate"><span class="pre">GestureConfig.fist_curl_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.min_curled_fingers"><code class="docutils literal notranslate"><span class="pre">GestureConfig.min_curled_fingers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.knife_finger_spread_max_ratio"><code class="docutils literal notranslate"><span class="pre">GestureConfig.knife_finger_spread_max_ratio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.throw_inertia_multiplier"><code class="docutils literal notranslate"><span class="pre">GestureConfig.throw_inertia_multiplier</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.debounce_frames"><code class="docutils literal notranslate"><span class="pre">GestureConfig.debounce_frames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.velocity_window_s"><code class="docutils literal notranslate"><span class="pre">GestureConfig.velocity_window_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.velocity_smoothing"><code class="docutils literal notranslate"><span class="pre">GestureConfig.velocity_smoothing</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.knife_min_speed"><code class="docutils literal notranslate"><span class="pre">GestureConfig.knife_min_speed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.knife_thickness"><code class="docutils literal notranslate"><span class="pre">GestureConfig.knife_thickness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.grab_radius"><code class="docutils literal notranslate"><span class="pre">GestureConfig.grab_radius</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.grab_grace_s"><code class="docutils literal notranslate"><span class="pre">GestureConfig.grab_grace_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.hand_lost_grace_s"><code class="docutils literal notranslate"><span class="pre">GestureConfig.hand_lost_grace_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GestureConfig.hand_hit_radius"><code class="docutils literal notranslate"><span class="pre">GestureConfig.hand_hit_radius</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig"><code class="docutils literal notranslate"><span class="pre">CameraConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.default_index"><code class="docutils literal notranslate"><span class="pre">CameraConfig.default_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.request_width"><code class="docutils literal notranslate"><span class="pre">CameraConfig.request_width</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.request_height"><code class="docutils literal notranslate"><span class="pre">CameraConfig.request_height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.request_fps"><code class="docutils literal notranslate"><span class="pre">CameraConfig.request_fps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.fourcc"><code class="docutils literal notranslate"><span class="pre">CameraConfig.fourcc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.CameraConfig.index_options"><code class="docutils literal notranslate"><span class="pre">CameraConfig.index_options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig"><code class="docutils literal notranslate"><span class="pre">TrackingConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.default_mode"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.default_mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.pose_model_file"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.pose_model_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.hand_model_file"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.hand_model_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.pose_model_url"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.pose_model_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.hand_model_url"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.hand_model_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.min_detection_confidence"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.min_detection_confidence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.min_tracking_confidence"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.min_tracking_confidence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.assign_max_distance"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.assign_max_distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.max_inference_side"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.max_inference_side</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.max_inference_fps"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.max_inference_fps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.TrackingConfig.camera"><code class="docutils literal notranslate"><span class="pre">TrackingConfig.camera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PlayersConfig"><code class="docutils literal notranslate"><span class="pre">PlayersConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PlayersConfig.colors"><code class="docutils literal notranslate"><span class="pre">PlayersConfig.colors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.PlayersConfig.names"><code class="docutils literal notranslate"><span class="pre">PlayersConfig.names</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig"><code class="docutils literal notranslate"><span class="pre">UiConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.background_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.background_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.panel_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.panel_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.accent_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.accent_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.text_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.text_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.muted_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.muted_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.danger_color"><code class="docutils literal notranslate"><span class="pre">UiConfig.danger_color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.camera_dim_alpha"><code class="docutils literal notranslate"><span class="pre">UiConfig.camera_dim_alpha</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.trail_length"><code class="docutils literal notranslate"><span class="pre">UiConfig.trail_length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.trail_lifetime_s"><code class="docutils literal notranslate"><span class="pre">UiConfig.trail_lifetime_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.popup_lifetime_s"><code class="docutils literal notranslate"><span class="pre">UiConfig.popup_lifetime_s</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.icon_path"><code class="docutils literal notranslate"><span class="pre">UiConfig.icon_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.heart_sprite_path"><code class="docutils literal notranslate"><span class="pre">UiConfig.heart_sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.background_sprite_path"><code class="docutils literal notranslate"><span class="pre">UiConfig.background_sprite_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.UiConfig.logo_sprite_path"><code class="docutils literal notranslate"><span class="pre">UiConfig.logo_sprite_path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.AudioConfig"><code class="docutils literal notranslate"><span class="pre">AudioConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.AudioConfig.enabled"><code class="docutils literal notranslate"><span class="pre">AudioConfig.enabled</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.AudioConfig.volume"><code class="docutils literal notranslate"><span class="pre">AudioConfig.volume</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.AudioConfig.sounds"><code class="docutils literal notranslate"><span class="pre">AudioConfig.sounds</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DifficultyConfig"><code class="docutils literal notranslate"><span class="pre">DifficultyConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DifficultyConfig.label"><code class="docutils literal notranslate"><span class="pre">DifficultyConfig.label</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DifficultyConfig.overrides"><code class="docutils literal notranslate"><span class="pre">DifficultyConfig.overrides</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.players"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.players</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.mode"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.lives"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.lives</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.timespan"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.timespan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.instant_death_bombs"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.instant_death_bombs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.instant_death_grenades"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.instant_death_grenades</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.enable_bombs"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.enable_bombs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.enable_limiters"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.enable_limiters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.enable_holders"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.enable_holders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.enable_throwers"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.enable_throwers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.competition_penalty"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.competition_penalty</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.tracking_mode"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.tracking_mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.difficulty"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.difficulty</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.life_options"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.life_options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.DefaultsConfig.timespan_options"><code class="docutils literal notranslate"><span class="pre">DefaultsConfig.timespan_options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig"><code class="docutils literal notranslate"><span class="pre">GameConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.window"><code class="docutils literal notranslate"><span class="pre">GameConfig.window</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.countdown_seconds"><code class="docutils literal notranslate"><span class="pre">GameConfig.countdown_seconds</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.physics"><code class="docutils literal notranslate"><span class="pre">GameConfig.physics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.spawning"><code class="docutils literal notranslate"><span class="pre">GameConfig.spawning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.fruits"><code class="docutils literal notranslate"><span class="pre">GameConfig.fruits</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.bomb"><code class="docutils literal notranslate"><span class="pre">GameConfig.bomb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.limiter"><code class="docutils literal notranslate"><span class="pre">GameConfig.limiter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.holder"><code class="docutils literal notranslate"><span class="pre">GameConfig.holder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.thrower"><code class="docutils literal notranslate"><span class="pre">GameConfig.thrower</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.scoring"><code class="docutils literal notranslate"><span class="pre">GameConfig.scoring</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.football"><code class="docutils literal notranslate"><span class="pre">GameConfig.football</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.gestures"><code class="docutils literal notranslate"><span class="pre">GameConfig.gestures</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.tracking"><code class="docutils literal notranslate"><span class="pre">GameConfig.tracking</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.players"><code class="docutils literal notranslate"><span class="pre">GameConfig.players</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.ui"><code class="docutils literal notranslate"><span class="pre">GameConfig.ui</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.audio"><code class="docutils literal notranslate"><span class="pre">GameConfig.audio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.difficulties"><code class="docutils literal notranslate"><span class="pre">GameConfig.difficulties</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="fruit_knight.config.schema.html#fruit_knight.config.schema.GameConfig.defaults"><code class="docutils literal notranslate"><span class="pre">GameConfig.defaults</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="fruit_knight.config.loader.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">fruit_knight.config.loader module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="fruit_knight.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">fruit_knight package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Fruit Knight team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">fruit_knight.config package</a><ul>
+<li><a class="reference internal" href="#fruit_knight.config.ConfigError"><code class="docutils literal notranslate"><span class="pre">ConfigError</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig"><code class="docutils literal notranslate"><span class="pre">GameConfig</span></code></a><ul>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.window"><code class="docutils literal notranslate"><span class="pre">GameConfig.window</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.countdown_seconds"><code class="docutils literal notranslate"><span class="pre">GameConfig.countdown_seconds</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.physics"><code class="docutils literal notranslate"><span class="pre">GameConfig.physics</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.spawning"><code class="docutils literal notranslate"><span class="pre">GameConfig.spawning</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.fruits"><code class="docutils literal notranslate"><span class="pre">GameConfig.fruits</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.bomb"><code class="docutils literal notranslate"><span class="pre">GameConfig.bomb</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.limiter"><code class="docutils literal notranslate"><span class="pre">GameConfig.limiter</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.holder"><code class="docutils literal notranslate"><span class="pre">GameConfig.holder</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.thrower"><code class="docutils literal notranslate"><span class="pre">GameConfig.thrower</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.scoring"><code class="docutils literal notranslate"><span class="pre">GameConfig.scoring</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.football"><code class="docutils literal notranslate"><span class="pre">GameConfig.football</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.gestures"><code class="docutils literal notranslate"><span class="pre">GameConfig.gestures</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.tracking"><code class="docutils literal notranslate"><span class="pre">GameConfig.tracking</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.players"><code class="docutils literal notranslate"><span class="pre">GameConfig.players</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.ui"><code class="docutils literal notranslate"><span class="pre">GameConfig.ui</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.audio"><code class="docutils literal notranslate"><span class="pre">GameConfig.audio</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.difficulties"><code class="docutils literal notranslate"><span class="pre">GameConfig.difficulties</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.GameConfig.defaults"><code class="docutils literal notranslate"><span class="pre">GameConfig.defaults</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fruit_knight.config.apply_difficulty"><code class="docutils literal notranslate"><span class="pre">apply_difficulty()</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+<li><a class="reference internal" href="#fruit_knight.config.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

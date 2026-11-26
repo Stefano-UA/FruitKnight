@@ -1,0 +1,22 @@
+fruit\_knight.entities package
+==============================
+
+.. automodule:: fruit_knight.entities
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.entities.base
+   fruit_knight.entities.bomb
+   fruit_knight.entities.factory
+   fruit_knight.entities.fruit
+   fruit_knight.entities.holder
+   fruit_knight.entities.limiter
+   fruit_knight.entities.target_zone
+   fruit_knight.entities.thrower

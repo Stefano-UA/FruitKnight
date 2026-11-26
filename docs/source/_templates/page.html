@@ -1,0 +1,9 @@
+{% extends "!page.html" %}
+{% block extrahead %}
+{{ super() }}
+{# Force Furo's dark theme by default: runs in <head>, before Furo reads the stored theme. #}
+<script>
+  try { localStorage.setItem("theme", "dark"); } catch (e) {}
+  document.documentElement.dataset.theme = "dark";
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+fruit\_knight.modes.competition module
+======================================
+
+.. automodule:: fruit_knight.modes.competition
+   :members:
+   :show-inheritance:
+   :undoc-members:

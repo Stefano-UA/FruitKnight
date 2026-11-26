@@ -1,0 +1,7 @@
+fruit\_knight.modes.spawner module
+==================================
+
+.. automodule:: fruit_knight.modes.spawner
+   :members:
+   :show-inheritance:
+   :undoc-members:

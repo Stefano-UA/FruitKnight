@@ -1,0 +1,32 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build artifacts
+build/
+dist/
+*.spec
+*.zip
+.doctrees/
+docs/build/
+
+# Downloaded MediaPipe models (fetched automatically on first run)
+assets/models/*.task
+
+# Editors / OS / temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+docs/source/_apidoc/

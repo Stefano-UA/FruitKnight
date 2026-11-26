@@ -1,0 +1,7 @@
+fruit\_knight.entities.target\_zone module
+==========================================
+
+.. automodule:: fruit_knight.entities.target_zone
+   :members:
+   :show-inheritance:
+   :undoc-members:

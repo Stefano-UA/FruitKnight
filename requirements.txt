@@ -1,0 +1,15 @@
+# Runtime
+pygame-ce>=2.5.0
+pygame-gui>=0.6.12
+pymunk>=7.0.0
+opencv-python>=4.8.0
+mediapipe>=0.10.14
+numpy>=1.24
+PyYAML>=6.0
+
+# Documentation
+sphinx>=7.2
+furo>=2024.1.29
+
+# Tests
+pytest>=8.0

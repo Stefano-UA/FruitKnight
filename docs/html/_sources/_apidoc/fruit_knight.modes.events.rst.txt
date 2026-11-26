@@ -1,0 +1,7 @@
+fruit\_knight.modes.events module
+=================================
+
+.. automodule:: fruit_knight.modes.events
+   :members:
+   :show-inheritance:
+   :undoc-members:

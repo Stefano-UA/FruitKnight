@@ -1,0 +1,7 @@
+fruit\_knight.ui.screens.game\_over module
+==========================================
+
+.. automodule:: fruit_knight.ui.screens.game_over
+   :members:
+   :show-inheritance:
+   :undoc-members:

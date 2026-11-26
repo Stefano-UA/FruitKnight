@@ -1,0 +1,7 @@
+fruit\_knight.entities.limiter module
+=====================================
+
+.. automodule:: fruit_knight.entities.limiter
+   :members:
+   :show-inheritance:
+   :undoc-members:

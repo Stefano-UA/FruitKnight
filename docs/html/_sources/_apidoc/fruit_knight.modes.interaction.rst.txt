@@ -1,0 +1,7 @@
+fruit\_knight.modes.interaction module
+======================================
+
+.. automodule:: fruit_knight.modes.interaction
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,25 @@
+fruit\_knight.rendering package
+===============================
+
+.. automodule:: fruit_knight.rendering
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.rendering.assets
+   fruit_knight.rendering.audio
+   fruit_knight.rendering.camera_view
+   fruit_knight.rendering.draw_utils
+   fruit_knight.rendering.effects
+   fruit_knight.rendering.entity_renderer
+   fruit_knight.rendering.fonts
+   fruit_knight.rendering.icon
+   fruit_knight.rendering.overlay
+   fruit_knight.rendering.procedural
+   fruit_knight.rendering.sprites

@@ -1,0 +1,7 @@
+fruit\_knight.utils.constants module
+====================================
+
+.. automodule:: fruit_knight.utils.constants
+   :members:
+   :show-inheritance:
+   :undoc-members:

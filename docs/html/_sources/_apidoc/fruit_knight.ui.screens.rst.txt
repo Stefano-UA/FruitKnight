@@ -1,0 +1,20 @@
+fruit\_knight.ui.screens package
+================================
+
+.. automodule:: fruit_knight.ui.screens
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fruit_knight.ui.screens.base
+   fruit_knight.ui.screens.camera_roi
+   fruit_knight.ui.screens.game_over
+   fruit_knight.ui.screens.game_screen
+   fruit_knight.ui.screens.main_menu
+   fruit_knight.ui.screens.mode_setup

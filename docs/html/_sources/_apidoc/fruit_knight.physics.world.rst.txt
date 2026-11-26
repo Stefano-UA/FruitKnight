@@ -1,0 +1,7 @@
+fruit\_knight.physics.world module
+==================================
+
+.. automodule:: fruit_knight.physics.world
+   :members:
+   :show-inheritance:
+   :undoc-members:

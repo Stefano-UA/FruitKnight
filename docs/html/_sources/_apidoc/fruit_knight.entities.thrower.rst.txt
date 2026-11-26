@@ -1,0 +1,7 @@
+fruit\_knight.entities.thrower module
+=====================================
+
+.. automodule:: fruit_knight.entities.thrower
+   :members:
+   :show-inheritance:
+   :undoc-members:

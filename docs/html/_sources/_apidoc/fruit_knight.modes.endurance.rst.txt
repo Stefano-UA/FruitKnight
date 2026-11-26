@@ -1,0 +1,7 @@
+fruit\_knight.modes.endurance module
+====================================
+
+.. automodule:: fruit_knight.modes.endurance
+   :members:
+   :show-inheritance:
+   :undoc-members:
