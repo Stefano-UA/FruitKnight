@@ -6,6 +6,7 @@ opencv-python>=4.8.0
 mediapipe>=0.10.14
 numpy>=1.24
 PyYAML>=6.0
+certifi>=2024.2.2
 
 # Documentation
 sphinx>=7.2

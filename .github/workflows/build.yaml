@@ -60,6 +60,7 @@ jobs:
           --paths 'src' \
           --add-data 'assets:assets' \
           --add-data 'config:config' \
+          --collect-data 'certifi' \
           --distpath dist ${{ env.MAIN_SCRIPT }}
 
       - name: Upload Artifact

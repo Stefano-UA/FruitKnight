@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 
 from fruit_knight.config import ConfigError, load_config
@@ -23,6 +24,22 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--verbose", action="store_true", help="enable debug logging")
     return parser.parse_args(argv)
 
+def _configure_frozen_env() -> None:
+    '''Configure CA bundle and subprocess library path in frozen builds.'''
+    if not getattr(sys, 'frozen', False):
+        return
+
+    import certifi
+
+    if not os.environ.get('SSL_CERT_FILE'):
+        os.environ['SSL_CERT_FILE'] = certifi.where()
+
+    if sys.platform.startswith('linux'):
+        lp_orig = os.environ.get('LD_LIBRARY_PATH_ORIG')
+        if lp_orig is not None:
+            os.environ['LD_LIBRARY_PATH'] = lp_orig
+        else:
+            os.environ.pop('LD_LIBRARY_PATH', None)
 
 def main(argv: list[str] | None = None) -> int:
     """Load configuration and run the application.
@@ -32,6 +49,7 @@ def main(argv: list[str] | None = None) -> int:
     :return: process exit code.
     :rtype: int
     """
+    _configure_frozen_env()
     args = parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     try:
